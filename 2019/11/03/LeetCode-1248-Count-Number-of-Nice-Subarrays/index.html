@@ -5,17 +5,17 @@
   
 
   
-  <title>LeetCode 1250 Check If It Is a Good Array | Hexo</title>
+  <title>LeetCode 1248 Count Number of Nice Subarrays | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这道题使用中国剩余定理假如x % t == 0 &amp;amp;&amp;amp; y % t == 0， 那么：ax + by % t == 0 使用gcd寻找所有数的最大共约数，假如不为1，则无法使用变换得到1假如为1，则可以通过变换得到1。 1234567891011121314class Solution &amp;#123;public:    int gcd(int a, int b) &amp;#123;">
-<meta name="keywords" content="leetcode,math,chinese remainder theorem">
+  <meta name="description" content="这道题是非常简单的组合题。因为是subarray，而不是subsequence，使得难度大大下降。将每个偶奇数组合，记录每个group的组数。再排列组合计算总数。 123456789101112131415161718class Solution &amp;#123;public:    int numberOfSubarrays(vector&amp;lt;int&amp;gt;&amp;amp; nums, int k) &amp;">
+<meta name="keywords" content="leetcode,sliding window,subarray">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode 1250 Check If It Is a Good Array">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;LeetCode-1250-Check-If-It-Is-a-Good-Array&#x2F;index.html">
+<meta property="og:title" content="LeetCode 1248 Count Number of Nice Subarrays">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;LeetCode-1248-Count-Number-of-Nice-Subarrays&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="这道题使用中国剩余定理假如x % t == 0 &amp;amp;&amp;amp; y % t == 0， 那么：ax + by % t == 0 使用gcd寻找所有数的最大共约数，假如不为1，则无法使用变换得到1假如为1，则可以通过变换得到1。 1234567891011121314class Solution &amp;#123;public:    int gcd(int a, int b) &amp;#123;">
+<meta property="og:description" content="这道题是非常简单的组合题。因为是subarray，而不是subsequence，使得难度大大下降。将每个偶奇数组合，记录每个group的组数。再排列组合计算总数。 123456789101112131415161718class Solution &amp;#123;public:    int numberOfSubarrays(vector&amp;lt;int&amp;gt;&amp;amp; nums, int k) &amp;">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-03T16:58:53.994Z">
+<meta property="og:updated_time" content="2019-11-03T17:50:13.381Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -63,10 +63,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-LeetCode-1250-Check-If-It-Is-a-Good-Array" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-LeetCode-1248-Count-Number-of-Nice-Subarrays" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" class="article-date">
-  <time datetime="2019-11-03T16:46:47.000Z" itemprop="datePublished">2019-11-03</time>
+    <a href="/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" class="article-date">
+  <time datetime="2019-11-03T17:45:13.000Z" itemprop="datePublished">2019-11-03</time>
 </a>
     
   </div>
@@ -77,7 +77,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      LeetCode 1250 Check If It Is a Good Array
+      LeetCode 1248 Count Number of Nice Subarrays
     </h1>
   
 
@@ -85,16 +85,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这道题使用中国剩余定理<br>假如x % t == 0 &amp;&amp; y % t == 0， 那么：<br>ax + by % t == 0</p>
-<p>使用gcd寻找所有数的最大共约数，假如不为1，则无法使用变换得到1<br>假如为1，则可以通过变换得到1。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (b == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> a;</span><br><span class="line">        <span class="keyword">return</span> gcd(b, a % b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isGoodArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> remainder = nums.front();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : nums)</span><br><span class="line">            remainder = gcd(remainder, it);</span><br><span class="line">        <span class="keyword">return</span> remainder == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+        <p>这道题是非常简单的组合题。<br>因为是subarray，而不是subsequence，使得难度大大下降。<br>将每个偶奇数组合，记录每个group的组数。再排列组合计算总数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numberOfSubarrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; group = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="comment">// group codes</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &amp; <span class="number">0x1</span>)</span><br><span class="line">                group.push_back(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                group.back()++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// use product rule to calc each subset with k odd numbers</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; group.<span class="built_in">size</span>(); i++)</span><br><span class="line">            cnt += group[i - k] * group[i];</span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck2jb59em000464wkhrc92qay" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck2jb59em000164wk9bk0578q" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
 
     </footer>
   </div>
@@ -102,15 +101,20 @@
     
 <nav id="article-nav">
   
-    <a href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          LeetCode 1249 Minimum Remove to Make Valid Parentheses
+          LeetCode 1247 Minimum Swaps to Make Strings Equal
         
       </div>
     </a>
   
+  
+    <a href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LeetCode 1249 Minimum Remove to Make Valid Parentheses</div>
+    </a>
   
 </nav>
 

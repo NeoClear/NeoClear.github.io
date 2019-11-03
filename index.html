@@ -61,6 +61,133 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" class="article-date">
+  <time datetime="2019-11-03T17:49:43.000Z" itemprop="datePublished">2019-11-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/">LeetCode 1247 Minimum Swaps to Make Strings Equal</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一道简单但较难实现的贪心题。<br>首先提取两个string不同的部分。<br>令diff为两个string的x的数量的差。<br>令pair为两个string不同的pair的数量。<br>当前context下有两个操作：</p>
+<ol>
+<li>swap，使diff += 2或diff -= 2，同时pair -= 2。需要swap一次。</li>
+<li>swap，使diff不变，但pair -= 2。需要swap两次。</li>
+</ol>
+<p>这样，题目分为两个情况：<br>在pair == 2时：<br>假如diff == 2，操作一次结束。<br>假如diff == 0，操作两次结束。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">cntx</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s)</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">'x'</span>)</span><br><span class="line">                cnt++;</span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">minimumSwap</span><span class="params">(<span class="built_in">string</span> s1, <span class="built_in">string</span> s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> ((cntx(s1) + cntx(s2)) &amp; <span class="number">0x1</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">        <span class="built_in">string</span> ss1, ss2;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s1.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s1[i] != s2[i]) &#123;</span><br><span class="line">                ss1.push_back(s1[i]);</span><br><span class="line">                ss2.push_back(s2[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> solve(ss1, ss2);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">diff</span><span class="params">(<span class="built_in">string</span> s1, <span class="built_in">string</span> s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s1.<span class="built_in">size</span>(); i++)</span><br><span class="line">            <span class="keyword">if</span> (s1[i] != s2[i])</span><br><span class="line">                cnt++;</span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">solve</span><span class="params">(<span class="built_in">string</span> s1, <span class="built_in">string</span> s2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> pairs = s1.<span class="built_in">size</span>() / <span class="number">2</span>; <span class="comment">// 3</span></span><br><span class="line">        <span class="keyword">int</span> dif = (<span class="built_in">abs</span>(cntx(s1) - cntx(s2)) / <span class="number">2</span>) &amp; <span class="number">0x1</span>; <span class="comment">// 3</span></span><br><span class="line">        <span class="keyword">return</span> (pairs + dif) &amp; <span class="number">0x1</span> ? pairs + <span class="number">1</span> : pairs;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck2jb59ef000064wkapux5f4c" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-LeetCode-1248-Count-Number-of-Nice-Subarrays" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" class="article-date">
+  <time datetime="2019-11-03T17:45:13.000Z" itemprop="datePublished">2019-11-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/">LeetCode 1248 Count Number of Nice Subarrays</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这道题是非常简单的组合题。<br>因为是subarray，而不是subsequence，使得难度大大下降。<br>将每个偶奇数组合，记录每个group的组数。再排列组合计算总数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numberOfSubarrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; group = &#123;<span class="number">1</span>&#125;;</span><br><span class="line">        <span class="comment">// group codes</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &amp; <span class="number">0x1</span>)</span><br><span class="line">                group.push_back(<span class="number">1</span>);</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">                group.back()++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="comment">// use product rule to calc each subset with k odd numbers</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = k; i &lt; group.<span class="built_in">size</span>(); i++)</span><br><span class="line">            cnt += group[i - k] * group[i];</span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck2jb59em000164wk9bk0578q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" class="article-date">
+  <time datetime="2019-11-03T17:18:58.000Z" itemprop="datePublished">2019-11-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/">LeetCode 1249 Minimum Remove to Make Valid Parentheses</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一道非常简单的stack题，当时没想法完全事因为自己菜。。。<br>思路：<br>    遇到’(‘就将index入栈，遇到’)’时，假如stack为空，就记录当前index；假如不为空，就pop。<br>    全部完成后剩下的index为需要去除的parens。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Actually simple</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minRemoveToMakeValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">'('</span>)</span><br><span class="line">                v.push_back(i);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">')'</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v.empty())</span><br><span class="line">                    s[i] = <span class="string">'*'</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    v.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!v.empty()) &#123;</span><br><span class="line">            s[v.back()] = <span class="string">'*'</span>;</span><br><span class="line">            v.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Learn remove function</span></span><br><span class="line">        s.erase(<span class="built_in">remove</span>(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), <span class="string">'*'</span>), s.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里原作者使用了一个remove函数。我们看下这个函数的源代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">ForwardIterator</span> <span class="title">remove</span> (<span class="title">ForwardIterator</span> <span class="title">first</span>, <span class="title">ForwardIterator</span> <span class="title">last</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">val</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ForwardIterator result = first;</span><br><span class="line">    <span class="keyword">while</span> (first!=last) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!(*first == val)) &#123;</span><br><span class="line">            *result = *first;</span><br><span class="line">            ++result;</span><br><span class="line">        &#125;</span><br><span class="line">        ++first;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码改变了原数组。<br>与参数匹配的block将被覆盖，并返回需要被删除的区块的head指针。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck2jb59em000364wk27bk6w9g" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stl/" rel="tag">stl</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-LeetCode-1250-Check-If-It-Is-a-Good-Array" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" class="article-date">
@@ -89,7 +216,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck2j8jw420000jcwk2fekcm9m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck2jb59em000464wkhrc92qay" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -114,7 +241,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
     </div>
   </div>
 
@@ -124,7 +251,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/leetcode/" style="font-size: 10px;">leetcode</a> <a href="/tags/math/" style="font-size: 10px;">math</a>
+      <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a>
     </div>
   </div>
 
@@ -144,6 +271,18 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/">LeetCode 1247 Minimum Swaps to Make Strings Equal</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/">LeetCode 1248 Count Number of Nice Subarrays</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/">LeetCode 1249 Minimum Remove to Make Valid Parentheses</a>
+          </li>
         
           <li>
             <a href="/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/">LeetCode 1250 Check If It Is a Good Array</a>
