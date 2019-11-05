@@ -61,6 +61,124 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" class="article-date">
+  <time datetime="2019-11-05T03:02:10.000Z" itemprop="datePublished">2019-11-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/">LeetCode 1239 Maximum Length of a Concatenated String with Unique Characters</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>又是一道bit manipulattion的题目，这周的出题人很喜欢bit啊。。。（我也比较喜欢bit<br>因为字母只有26个，所以可以将一个字符的出现视作对应bit上的1。<br>再进行搜索，尝试每个可能（数据规模允许</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; bits;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; length;</span><br><span class="line">    <span class="keyword">int</span> max_len = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> state, <span class="keyword">int</span> id, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id == bits.<span class="built_in">size</span>())</span><br><span class="line">            max_len = <span class="built_in">max</span>(max_len, len);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> nt = id; nt &lt; bits.<span class="built_in">size</span>(); nt++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bits[nt] + state == (bits[nt] | state)) &#123;</span><br><span class="line">                solve(state | bits[nt], nt + <span class="number">1</span>, len + length[nt]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                max_len = <span class="built_in">max</span>(max_len, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">duplicate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (flag == (flag | (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>))))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            flag |= <span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; s : arr) &#123;</span><br><span class="line">            <span class="keyword">if</span> (duplicate(s))</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> state = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">                state |= (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            bits.push_back(state);</span><br><span class="line">            length.push_back(s.length());</span><br><span class="line">        &#125;</span><br><span class="line">        solve(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> max_len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck2l9sgsu00013wwkbl0y1hnz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit/" rel="tag">bit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-LeetCode-1238-Circular-Permutation-in-Binary-Representation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" class="article-date">
+  <time datetime="2019-11-05T02:09:08.000Z" itemprop="datePublished">2019-11-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/">LeetCode 1238 Circular Permutation in Binary Representation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这道题和曾经的一道题非常相似。<br>给定n，生成n位数的数组，每个相邻的数只有一个bit不同。<br>从0开始，每次开始计算新的一位，就将计算完成的数组倒序排列，每个数组最高位添加1。<br>因为计算出的数组相邻数只差1bit，所以可以直接使用数组得到新的数组。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; circularPermutation(<span class="keyword">int</span> n, <span class="keyword">int</span> start) &#123;</span><br><span class="line">        <span class="keyword">if</span> (n == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ans = &#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> offset = <span class="number">1</span>; offset &lt; n; offset++) &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> it = ans.<span class="built_in">size</span>() - <span class="number">1</span>; it &gt;= <span class="number">0</span>; it--) &#123;</span><br><span class="line">                ans.push_back(ans[it] | (<span class="number">1</span> &lt;&lt; offset));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; ret;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">auto</span> it = ans.<span class="built_in">begin</span>(); it != ans.<span class="built_in">end</span>(); it++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (*it == start) &#123;</span><br><span class="line">                ret = <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(it, ans.<span class="built_in">end</span>());</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">auto</span> i = ans.<span class="built_in">begin</span>(); i != it; i++)</span><br><span class="line">                    ret.push_back(*i);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck2l9sgsz00033wwkhiynakua" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" class="article-date">
+  <time datetime="2019-11-05T01:50:21.000Z" itemprop="datePublished">2019-11-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/">LeetCode 1237 Find Positive Integer Solution for a Given Equation</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>非常水的一题。。。<br>可以用二分做，但是没必要？（用二分无法改进复杂度</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomFunction</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Returns f(x, y) for any given positive integers x and y.</span></span><br><span class="line">    <span class="comment">// Note that f(x, y) is increasing with respect to both x and y.</span></span><br><span class="line">    <span class="comment">// i.e. f(x, y) &lt; f(x + 1, y), f(x, y) &lt; f(x, y + 1)</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">f</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; findSolution(CustomFunction&amp; customfunction, <span class="keyword">int</span> z) &#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; ans;</span><br><span class="line">        <span class="keyword">int</span> x = <span class="number">1</span>, y = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (customfunction.f(x, y) &lt; z)</span><br><span class="line">            y++;</span><br><span class="line">        <span class="keyword">while</span> (y &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (customfunction.f(x, y) == z) &#123;</span><br><span class="line">                ans.push_back(&#123;x, y&#125;);</span><br><span class="line">                y--;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (customfunction.f(x, y) &gt; z)</span><br><span class="line">                y--;</span><br><span class="line">            <span class="keyword">if</span> (customfunction.f(x, y) &lt; z)</span><br><span class="line">                x++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck2l9sgsp00003wwkgtapgtm3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-LeetCode-1245-Tree-Diameter" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/04/LeetCode-1245-Tree-Diameter/" class="article-date">
@@ -89,7 +207,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1245-Tree-Diameter/" data-id="ck2kvw9iz000324wk4sb9133k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1245-Tree-Diameter/" data-id="ck2l9sgt000043wwk0iy95cb5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
@@ -129,7 +247,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1244-Design-A-Leaderboard/" data-id="ck2kvw9io000024wk7cea20ob" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1244-Design-A-Leaderboard/" data-id="ck2l9sgt200053wwkhb1q32sc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/" rel="tag">set</a></li></ul>
@@ -168,7 +286,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1243-Array-Transformation/" data-id="ck2kvw9iu000124wkfek7hgrv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1243-Array-Transformation/" data-id="ck2l9sgt500083wwkf4q2dd2k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -212,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck2kvw9j0000424wk6rj6a4fm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck2l9sgt400073wwkdl263ju6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -251,7 +369,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck2kvw9j2000524wkeun6hfbj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck2l9sgt7000b3wwk4yzmhdol" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
@@ -295,7 +413,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck2kvw9j4000724wk1f2ih4tp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck2l9sgt6000a3wwkfohoabxo" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stl/" rel="tag">stl</a></li></ul>
@@ -335,7 +453,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck2kvw9j5000824wkhvswg269" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck2l9sgt9000d3wwk4ef3a8rv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -360,7 +478,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit/" rel="tag">bit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
     </div>
   </div>
 
@@ -370,7 +488,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/brute-force/" style="font-size: 10px;">brute force</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/data-structure/" style="font-size: 10px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 10px;">math</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+      <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/bit/" style="font-size: 10px;">bit</a> <a href="/tags/bit-operation/" style="font-size: 10px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 13.33px;">brute force</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/data-structure/" style="font-size: 10px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 16.67px;">math</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
     </div>
   </div>
 
@@ -392,23 +510,23 @@
       <ul>
         
           <li>
+            <a href="/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/">LeetCode 1239 Maximum Length of a Concatenated String with Unique Characters</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/">LeetCode 1238 Circular Permutation in Binary Representation</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/">LeetCode 1237 Find Positive Integer Solution for a Given Equation</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/04/LeetCode-1245-Tree-Diameter/">LeetCode 1245 Tree Diameter</a>
           </li>
         
           <li>
             <a href="/2019/11/04/LeetCode-1244-Design-A-Leaderboard/">LeetCode 1244 Design A Leaderboard</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/04/LeetCode-1243-Array-Transformation/">LeetCode 1243 Array Transformation</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/">LeetCode 1247 Minimum Swaps to Make Strings Equal</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/">LeetCode 1248 Count Number of Nice Subarrays</a>
           </li>
         
       </ul>
