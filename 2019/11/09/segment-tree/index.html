@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>segment tree | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="线段树，常见却又复杂。其基本原理较为简单，但实现中有这种各样的细节需要注意。 12345678struct segment_node &amp;#123;    int left;    int right;    int weight;    int lazy;&amp;#125;;struct segment_node tree[size * 4 + 1]; 其中lazy值为此区间的子区间的延迟更新值 第一步">
+<meta name="keywords" content="data structure,segment tree">
+<meta property="og:type" content="article">
+<meta property="og:title" content="segment tree">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;09&#x2F;segment-tree&#x2F;index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="线段树，常见却又复杂。其基本原理较为简单，但实现中有这种各样的细节需要注意。 12345678struct segment_node &amp;#123;    int left;    int right;    int weight;    int lazy;&amp;#125;;struct segment_node tree[size * 4 + 1]; 其中lazy值为此区间的子区间的延迟更新值 第一步">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-10T03:04:37.216Z">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-segment-tree" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/09/segment-tree/" class="article-date">
+  <time datetime="2019-11-10T02:40:45.000Z" itemprop="datePublished">2019-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      segment tree
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>线段树，常见却又复杂。<br>其基本原理较为简单，但实现中有这种各样的细节需要注意。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment_node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> left;</span><br><span class="line">    <span class="keyword">int</span> right;</span><br><span class="line">    <span class="keyword">int</span> weight;</span><br><span class="line">    <span class="keyword">int</span> lazy;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment_node</span> <span class="title">tree</span>[<span class="title">size</span> * 4 + 1];</span></span><br></pre></td></tr></table></figure>
+<p>其中lazy值为此区间的子区间的延迟更新值</p>
+<p>第一步是建树过程。<br>数组大小为N * 4 + 1。最好再加点量（</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build segment tree</span></span><br><span class="line"><span class="comment">// param: k -&gt; index of segment node in the array</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k].left = left;</span><br><span class="line">    tree[k].right = right;</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (left == right) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; tree[k].weight;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">    build(left, mid, k * <span class="number">2</span>);</span><br><span class="line">    build(mid + <span class="number">1</span>, right, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>线段树有两种基本操作：区间更新和求区间和。其他操作皆可由求和和更新得到（比如point更新</p>
+<p>区间更新<br>注意在update区间时需要同时更新weight和lazy。lazy是此区间的子区间的延迟更新，不包含当前区间的延迟更新。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> addition, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j) &#123;</span><br><span class="line">        tree[k].weight += addition * (tree[k].right - tree[k].left + <span class="number">1</span>);</span><br><span class="line">        tree[k].lazy += addition;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        update(i, mid, addition, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        update(mid + <span class="number">1</span>, j, addition, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>区间求和<br>原理和update类似</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the sum of the range</span></span><br><span class="line"><span class="comment">// param: i, j represents interval [i, j]</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j)</span><br><span class="line">        <span class="keyword">return</span> tree[k].weight;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然，最重要的还是我们的down函数了。down函数使得延迟更新成为可能。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k * <span class="number">2</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span>].right - tree[k * <span class="number">2</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span> + <span class="number">1</span>].right - tree[k * <span class="number">2</span> + <span class="number">1</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/09/segment-tree/" data-id="ck2seztak000fwcwk89669un9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">LeetCode 1239 Maximum Length of a Concatenated String with Unique Characters</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/bit-operation/" style="font-size: 13.33px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 13.33px;">brute force</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/data-structure/" style="font-size: 13.33px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 16.67px;">math</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/11/09/segment-tree/">segment tree</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/">LeetCode 1239 Maximum Length of a Concatenated String with Unique Characters</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/">LeetCode 1238 Circular Permutation in Binary Representation</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/">LeetCode 1237 Find Positive Integer Solution for a Given Equation</a>
+          </li>
+        
+          <li>
+            <a href="/2019/11/04/LeetCode-1245-Tree-Diameter/">LeetCode 1245 Tree Diameter</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
