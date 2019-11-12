@@ -61,6 +61,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-binary-indexed-tree" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/09/binary-indexed-tree/" class="article-date">
+  <time datetime="2019-11-10T04:48:55.000Z" itemprop="datePublished">2019-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/09/binary-indexed-tree/">binary indexed tree</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>binary indexed tree，又称fenwick tree，树状数组。是一种动态维护数组前缀和的数据结构。其代码极为简洁。<br>但是理解概念较难。一般直接背代码。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">fwt</span> &#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; sums_;</span><br><span class="line">    <span class="comment">// return the lowbit of an integer</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">lowbit</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> x &amp; (-x); &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// the index of fwt start at 1. Thus, we initialize as n + 1</span></span><br><span class="line">    fwt(<span class="keyword">int</span> n): sums_(n + <span class="number">1</span>, <span class="number">0</span>) &#123;&#125;</span><br><span class="line">    <span class="comment">// id in update increases until exceeds the size of fwt</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> id, <span class="keyword">int</span> delta)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">while</span> (id &lt; sums_.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            sums_[id] += delta;</span><br><span class="line">            id += lowbit(id);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// id in query decreases until less or equal to 0</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> id)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (id &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            ans += sums_[id];</span><br><span class="line">            id -= lowbit(id);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>真的没啥好解释的。。。<br>注意update中id增加<br>而query中id减少</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/09/binary-indexed-tree/" data-id="ck2veji08000az4wka39k1gln" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-segment-tree" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/09/segment-tree/" class="article-date">
@@ -91,17 +132,17 @@
 
 <p>线段树有两种基本操作：区间更新和求区间和。其他操作皆可由求和和更新得到（比如point更新</p>
 <p>区间更新<br>注意在update区间时需要同时更新weight和lazy。lazy是此区间的子区间的延迟更新，不包含当前区间的延迟更新。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> addition, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j) &#123;</span><br><span class="line">        tree[k].weight += addition * (tree[k].right - tree[k].left + <span class="number">1</span>);</span><br><span class="line">        tree[k].lazy += addition;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        update(i, mid, addition, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        update(mid + <span class="number">1</span>, j, addition, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> addition, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j) &#123;</span><br><span class="line">        tree[k].weight += addition * (tree[k].right - tree[k].left + <span class="number">1</span>);</span><br><span class="line">        tree[k].lazy += addition;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        update(i, j, addition, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        update(i, j, addition, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>区间求和<br>原理和update类似</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the sum of the range</span></span><br><span class="line"><span class="comment">// param: i, j represents interval [i, j]</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j)</span><br><span class="line">        <span class="keyword">return</span> tree[k].weight;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the sum of the range</span></span><br><span class="line"><span class="comment">// param: i, j represents interval [i, j]</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j)</span><br><span class="line">        <span class="keyword">return</span> tree[k].weight;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>当然，最重要的还是我们的down函数了。down函数使得延迟更新成为可能。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k * <span class="number">2</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span>].right - tree[k * <span class="number">2</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span> + <span class="number">1</span>].right - tree[k * <span class="number">2</span> + <span class="number">1</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/09/segment-tree/" data-id="ck2seztak000fwcwk89669un9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/09/segment-tree/" data-id="ck2veji09000bz4wk2ier9e7e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li></ul>
@@ -141,7 +182,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck2sezta40001wcwk6gu3cw1e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck2vejhzz0003z4wk3oh549da" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li></ul>
@@ -180,7 +221,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck2sezt9x0000wcwk3naf1fbm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck2vejhzv0001z4wkaki342ex" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -220,7 +261,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck2sezta80003wcwk3z6kbylv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck2vejhzp0000z4wkb9pmgps7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -260,7 +301,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1245-Tree-Diameter/" data-id="ck2seztag000bwcwk3nibbk0m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1245-Tree-Diameter/" data-id="ck2veji050007z4wkd99s771n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
@@ -300,7 +341,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1244-Design-A-Leaderboard/" data-id="ck2sezta90004wcwkemxyf8ss" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1244-Design-A-Leaderboard/" data-id="ck2veji030005z4wkd5gggazg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/" rel="tag">set</a></li></ul>
@@ -339,7 +380,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1243-Array-Transformation/" data-id="ck2seztab0005wcwk21izbdo3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/LeetCode-1243-Array-Transformation/" data-id="ck2veji010004z4wkacdk76fu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -383,7 +424,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck2seztac0007wcwk1cuwbilw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck2veji060008z4wkf2v3ecj5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -422,54 +463,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck2seztae0008wcwk9htudefh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck2veji0b000dz4wk39mpa1vg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" class="article-date">
-  <time datetime="2019-11-03T17:18:58.000Z" itemprop="datePublished">2019-11-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/">LeetCode 1249 Minimum Remove to Make Valid Parentheses</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这是一道非常简单的stack题，当时没想法完全事因为自己菜。。。<br>思路：<br>    遇到’(‘就将index入栈，遇到’)’时，假如stack为空，就记录当前index；假如不为空，就pop。<br>    全部完成后剩下的index为需要去除的parens。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Actually simple</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minRemoveToMakeValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">'('</span>)</span><br><span class="line">                v.push_back(i);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">')'</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v.empty())</span><br><span class="line">                    s[i] = <span class="string">'*'</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    v.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!v.empty()) &#123;</span><br><span class="line">            s[v.back()] = <span class="string">'*'</span>;</span><br><span class="line">            v.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Learn remove function</span></span><br><span class="line">        s.erase(<span class="built_in">remove</span>(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), <span class="string">'*'</span>), s.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<p>这里原作者使用了一个remove函数。我们看下这个函数的源代码</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">ForwardIterator</span> <span class="title">remove</span> (<span class="title">ForwardIterator</span> <span class="title">first</span>, <span class="title">ForwardIterator</span> <span class="title">last</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">val</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ForwardIterator result = first;</span><br><span class="line">    <span class="keyword">while</span> (first!=last) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!(*first == val)) &#123;</span><br><span class="line">            *result = *first;</span><br><span class="line">            ++result;</span><br><span class="line">        &#125;</span><br><span class="line">        ++first;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段代码改变了原数组。<br>与参数匹配的block将被覆盖，并返回需要被删除的区块的head指针。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck2seztaf000awcwkdpax6rrt" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stl/" rel="tag">stl</a></li></ul>
 
     </footer>
   </div>
@@ -496,7 +493,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
     </div>
   </div>
 
@@ -506,7 +503,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/bit-operation/" style="font-size: 13.33px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 13.33px;">brute force</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/data-structure/" style="font-size: 13.33px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 16.67px;">math</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+      <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bit-operation/" style="font-size: 13.33px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 13.33px;">brute force</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/data-structure/" style="font-size: 16.67px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/graph/" style="font-size: 10px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 16.67px;">math</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
     </div>
   </div>
 
@@ -528,6 +525,10 @@
       <ul>
         
           <li>
+            <a href="/2019/11/09/binary-indexed-tree/">binary indexed tree</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/09/segment-tree/">segment tree</a>
           </li>
         
@@ -541,10 +542,6 @@
         
           <li>
             <a href="/2019/11/04/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/">LeetCode 1237 Find Positive Integer Solution for a Given Equation</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/04/LeetCode-1245-Tree-Diameter/">LeetCode 1245 Tree Diameter</a>
           </li>
         
       </ul>
