@@ -61,6 +61,58 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-data_structure/segment-tree" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/09/data_structure/segment-tree/" class="article-date">
+  <time datetime="2019-11-10T02:40:45.000Z" itemprop="datePublished">2019-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/09/data_structure/segment-tree/">segment tree</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>线段树，常见却又复杂。<br>其基本原理较为简单，但实现中有这种各样的细节需要注意。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment_node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> left;</span><br><span class="line">    <span class="keyword">int</span> right;</span><br><span class="line">    <span class="keyword">int</span> weight;</span><br><span class="line">    <span class="keyword">int</span> lazy;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment_node</span> <span class="title">tree</span>[<span class="title">size</span> * 4 + 1];</span></span><br></pre></td></tr></table></figure>
+<p>其中lazy值为此区间的子区间的延迟更新值</p>
+<p>第一步是建树过程。<br>数组大小为N * 4 + 1。最好再加点量（</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build segment tree</span></span><br><span class="line"><span class="comment">// param: k -&gt; index of segment node in the array</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k].left = left;</span><br><span class="line">    tree[k].right = right;</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (left == right) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; tree[k].weight;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">    build(left, mid, k * <span class="number">2</span>);</span><br><span class="line">    build(mid + <span class="number">1</span>, right, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>线段树有两种基本操作：区间更新和求区间和。其他操作皆可由求和和更新得到（比如point更新</p>
+<p>区间更新<br>注意在update区间时需要同时更新weight和lazy。lazy是此区间的子区间的延迟更新，不包含当前区间的延迟更新。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> addition, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j) &#123;</span><br><span class="line">        tree[k].weight += addition * (tree[k].right - tree[k].left + <span class="number">1</span>);</span><br><span class="line">        tree[k].lazy += addition;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        update(i, j, addition, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        update(i, j, addition, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>区间求和<br>原理和update类似</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the sum of the range</span></span><br><span class="line"><span class="comment">// param: i, j represents interval [i, j]</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j)</span><br><span class="line">        <span class="keyword">return</span> tree[k].weight;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>当然，最重要的还是我们的down函数了。down函数使得延迟更新成为可能。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k * <span class="number">2</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span>].right - tree[k * <span class="number">2</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span> + <span class="number">1</span>].right - tree[k * <span class="number">2</span> + <span class="number">1</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/09/data_structure/segment-tree/" data-id="ck3399ee8000cy0wkflycf8hf" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" class="article-date">
@@ -89,7 +141,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck32iy2hh000kz0wkgjh8gysd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck3399eeg000my0wk15o94bzm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li></ul>
@@ -128,7 +180,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck32iy2hf000hz0wkap9ueon3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck3399eei000py0wk19zcfdd4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -168,7 +220,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck32iy2he000fz0wkgwi0gdag" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck3399eec000hy0wkbbtfauwh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -208,7 +260,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1245-Tree-Diameter/" data-id="ck32iy2hm000oz0wkgls4ad65" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1245-Tree-Diameter/" data-id="ck3399eej000qy0wk89n2bbol" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
@@ -248,7 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1244-Design-A-Leaderboard/" data-id="ck32iy2hj000lz0wk4r1w5myj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1244-Design-A-Leaderboard/" data-id="ck3399eeh000oy0wk23qnb5e1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/" rel="tag">set</a></li></ul>
@@ -287,7 +339,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1243-Array-Transformation/" data-id="ck32iy2hk000nz0wk4fgug77j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1243-Array-Transformation/" data-id="ck3399eee000ky0wk9wrfbxqe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -331,7 +383,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck32iy2hn000pz0wk3tci55do" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck3399eel000sy0wk6t95geck" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -370,7 +422,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck32iy2hp000sz0wkelr69qil" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck3399eem000ty0wk62oscz1h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
@@ -414,50 +466,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck32iy2hq000uz0wk1r62a154" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck3399een000vy0wk3jlkd195" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stl/" rel="tag">stl</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" class="article-date">
-  <time datetime="2019-11-03T16:46:47.000Z" itemprop="datePublished">2019-11-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/">LeetCode 1250 Check If It Is a Good Array</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这道题使用中国剩余定理<br>假如x % t == 0 &amp;&amp; y % t == 0， 那么：<br>ax + by % t == 0</p>
-<p>使用gcd寻找所有数的最大共约数，假如不为1，则无法使用变换得到1<br>假如为1，则可以通过变换得到1。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">gcd</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (b == <span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> a;</span><br><span class="line">        <span class="keyword">return</span> gcd(b, a % b);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isGoodArray</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> remainder = nums.front();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : nums)</span><br><span class="line">            remainder = gcd(remainder, it);</span><br><span class="line">        <span class="keyword">return</span> remainder == <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck32iy2ht000xz0wkfp40hx5n" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
 
     </footer>
   </div>
@@ -470,7 +482,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -484,7 +496,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
     </div>
   </div>
 
@@ -494,7 +506,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12.5px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12.5px;">brute force</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 17.5px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12.5px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 15px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+      <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12.5px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12.5px;">brute force</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 17.5px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12.5px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 15px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
     </div>
   </div>
 
@@ -516,6 +528,10 @@
       <ul>
         
           <li>
+            <a href="/2019/11/17/data_structure/heap/">heap</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/16/hdu/hdu-2063/">hdu 2063</a>
           </li>
         
@@ -529,10 +545,6 @@
         
           <li>
             <a href="/2019/11/16/poj/poj-1273-Drainage-Ditches/">poj 1273 Drainage Ditches</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/15/technique/high-precision/">high precision</a>
           </li>
         
       </ul>
