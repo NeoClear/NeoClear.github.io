@@ -61,6 +61,46 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" class="article-date">
+  <time datetime="2019-11-05T03:02:10.000Z" itemprop="datePublished">2019-11-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/">LeetCode 1239 Maximum Length of a Concatenated String with Unique Characters</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>又是一道bit manipulattion的题目，这周的出题人很喜欢bit啊。。。（我也比较喜欢bit<br>因为字母只有26个，所以可以将一个字符的出现视作对应bit上的1。<br>再进行搜索，尝试每个可能（数据规模允许</p>
+<p>有一个技巧：if num1 + num2 == num1 | num2，证明两个数的bit不重叠，反之亦然。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; bits;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; length;</span><br><span class="line">    <span class="keyword">int</span> max_len = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> state, <span class="keyword">int</span> id, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id == bits.<span class="built_in">size</span>())</span><br><span class="line">            max_len = <span class="built_in">max</span>(max_len, len);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> nt = id; nt &lt; bits.<span class="built_in">size</span>(); nt++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bits[nt] + state == (bits[nt] | state)) &#123;</span><br><span class="line">                solve(state | bits[nt], nt + <span class="number">1</span>, len + length[nt]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                max_len = <span class="built_in">max</span>(max_len, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">duplicate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (flag == (flag | (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>))))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            flag |= <span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; s : arr) &#123;</span><br><span class="line">            <span class="keyword">if</span> (duplicate(s))</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> state = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">                state |= (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            bits.push_back(state);</span><br><span class="line">            length.push_back(s.length());</span><br><span class="line">        &#125;</span><br><span class="line">        solve(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> max_len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck32iy2hh000kz0wkgjh8gysd" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-leetcode/LeetCode-1238-Circular-Permutation-in-Binary-Representation" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/04/leetcode/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" class="article-date">
@@ -88,7 +128,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck326eykd000dx8wkd4x5dh1h" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1238-Circular-Permutation-in-Binary-Representation/" data-id="ck32iy2hf000hz0wkap9ueon3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -128,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck326eykd000hx8wkci7a5uye" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1237-Find-Positive-Integer-Solution-for-a-Given-Equation/" data-id="ck32iy2he000fz0wkgwi0gdag" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -168,7 +208,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1245-Tree-Diameter/" data-id="ck326eyko000sx8wk32hkg6v6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1245-Tree-Diameter/" data-id="ck32iy2hm000oz0wkgls4ad65" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
@@ -208,7 +248,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1244-Design-A-Leaderboard/" data-id="ck326eykd000kx8wkdde8ht9d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1244-Design-A-Leaderboard/" data-id="ck32iy2hj000lz0wk4r1w5myj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/" rel="tag">set</a></li></ul>
@@ -247,7 +287,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1243-Array-Transformation/" data-id="ck326eykd000lx8wkci162y6j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1243-Array-Transformation/" data-id="ck32iy2hk000nz0wk4fgug77j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -291,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck326eykd000nx8wk1klzb1hp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1247-Minimum-Swaps-to-Make-Strings-Equal/" data-id="ck32iy2hn000pz0wk3tci55do" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li></ul>
@@ -330,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck326eykd000ox8wk2c3g3ujv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1248-Count-Number-of-Nice-Subarrays/" data-id="ck32iy2hp000sz0wkelr69qil" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li></ul>
@@ -374,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck326eykd000px8wkbyet9uut" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck32iy2hq000uz0wk1r62a154" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stl/" rel="tag">stl</a></li></ul>
@@ -414,7 +454,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck326eykq000yx8wk6pmigcwh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck32iy2ht000xz0wkfp40hx5n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -444,7 +484,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li></ul>
     </div>
   </div>
 
@@ -454,7 +494,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bit-operation/" style="font-size: 12.5px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12.5px;">brute force</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 17.5px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12.5px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 15px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
+      <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12.5px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12.5px;">brute force</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 17.5px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12.5px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 15px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a>
     </div>
   </div>
 
@@ -476,6 +516,10 @@
       <ul>
         
           <li>
+            <a href="/2019/11/16/hdu/hdu-2063/">hdu 2063</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/16/data_structure/adjacency-table/">adjacency table</a>
           </li>
         
@@ -489,10 +533,6 @@
         
           <li>
             <a href="/2019/11/15/technique/high-precision/">high precision</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/15/data_structure/hash-table/">hash table</a>
           </li>
         
       </ul>
