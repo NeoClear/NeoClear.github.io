@@ -91,11 +91,13 @@
 <p>有一说一，opengl的代码，不对着模板打，完全不知道怎么写<br>有一万个名字差不多的函数要调用，人能记得住🐎？？？</p>
 <p>本节内容的重点是明白VBO和VAO的含义。<br>VBO相当与显卡上的一块缓冲区（准确来说是显存），其内容无法被显卡识别，是由CPU直接通过PCI-E复制到显卡上的。<br>VAO相当与指向一个VBO的指针，内部有15个小指针（0至15）。通过指定VAO和设置Attribute Pointer，显卡的opengl API能识别显存中的数据。（和CPU中的高速缓存地址计算寄存器差不多吧）</p>
 <p>再接再厉吧，opengl真的不是人能学的。<br>没办法，谁让AMD是显卡公司呢</p>
-
+<p>加一点内容：</p>
+<p>opengl默认绘制三角形为逆时针绘制，假如三角形的点排序为顺时针，则会绘制图形的背面。<br>opengl默认绘制图形背面。假如不需要绘制图形背面，可以加入以下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glEnable(GL_CULL_FACE);</span><br><span class="line">glCullFace(GL_FRONT);</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/23/opengl/opengl-triangle/" data-id="ck3cebh8x001h4cwkcqhs8eqg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/23/opengl/opengl-triangle/" data-id="ck3cmxsps000yk0wkfkev9u1o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -140,7 +142,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/19/linux/driver/linux-driver-1/" data-id="ck3cebh9r00404cwkb2ot8fuh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/19/linux/driver/linux-driver-1/" data-id="ck3cmxsr30044k0wkej583bu6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/driver/" rel="tag">driver</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/" rel="tag">linux</a></li></ul>
@@ -185,7 +187,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/19/tools/Google-Test-1/" data-id="ck3cebh95001p4cwkcyw6clg2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/19/tools/Google-Test-1/" data-id="ck3cmxsqy003wk0wk7ldxdmhx" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Google-Test/" rel="tag">Google Test</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gtest/" rel="tag">gtest</a></li></ul>
@@ -231,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/18/tools/CMake-2/" data-id="ck3cebh8y001i4cwk7maf09fe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/18/tools/CMake-2/" data-id="ck3cmxsqx003vk0wkd10ca1pr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build/" rel="tag">build</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li></ul>
@@ -311,7 +313,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/18/tools/CMake-1/" data-id="ck3cebh93001m4cwk2exfagnl" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/18/tools/CMake-1/" data-id="ck3cmxspw0016k0wke6o69o0n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/build/" rel="tag">build</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li></ul>
@@ -350,7 +352,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/17/data_structure/heap/" data-id="ck3cebh8g000x4cwkdr7c6lv2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/17/data_structure/heap/" data-id="ck3cmxspa000ck0wk9cw91l73" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
@@ -391,7 +393,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/hdu/hdu-2063/" data-id="ck3cebh8w001f4cwk5pv2c1du" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/hdu/hdu-2063/" data-id="ck3cmxspd000fk0wk5htyb7ol" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li></ul>
@@ -430,7 +432,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/data_structure/adjacency-table/" data-id="ck3cebh8c000t4cwkfyli07bp" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/data_structure/adjacency-table/" data-id="ck3cmxsp60008k0wk80awh80d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li></ul>
@@ -472,7 +474,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/bzoj/bzoj-2200/" data-id="ck3cebh7r00084cwkbt0q0y6e" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/bzoj/bzoj-2200/" data-id="ck3cmxsp40005k0wk6ytnbtdq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li></ul>
@@ -514,7 +516,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/poj/poj-1273-Drainage-Ditches/" data-id="ck3cebh90001k4cwk9t7bfm8w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/poj/poj-1273-Drainage-Ditches/" data-id="ck3cmxspt0010k0wkan7f0r2x" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poj/" rel="tag">poj</a></li></ul>

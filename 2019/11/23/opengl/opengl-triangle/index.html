@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="开头先放下傅老师的视频教程地址：是台湾腔，wsl visual studio绝对是宇宙第一IDE！在linux上调了半年的CMake，用visual studio两分钟搞定。微软大法好。 今天的opengl学习内容是在window上画一个三角形。直接贴代码吧，分着写多累呐。 12345678910111213141516171819202122232425262728293031323334353">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-24T02:45:23.690Z">
+<meta property="og:updated_time" content="2019-11-24T06:42:27.574Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -93,11 +93,13 @@
 <p>有一说一，opengl的代码，不对着模板打，完全不知道怎么写<br>有一万个名字差不多的函数要调用，人能记得住🐎？？？</p>
 <p>本节内容的重点是明白VBO和VAO的含义。<br>VBO相当与显卡上的一块缓冲区（准确来说是显存），其内容无法被显卡识别，是由CPU直接通过PCI-E复制到显卡上的。<br>VAO相当与指向一个VBO的指针，内部有15个小指针（0至15）。通过指定VAO和设置Attribute Pointer，显卡的opengl API能识别显存中的数据。（和CPU中的高速缓存地址计算寄存器差不多吧）</p>
 <p>再接再厉吧，opengl真的不是人能学的。<br>没办法，谁让AMD是显卡公司呢</p>
-
+<p>加一点内容：</p>
+<p>opengl默认绘制三角形为逆时针绘制，假如三角形的点排序为顺时针，则会绘制图形的背面。<br>opengl默认绘制图形背面。假如不需要绘制图形背面，可以加入以下代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glEnable(GL_CULL_FACE);</span><br><span class="line">glCullFace(GL_FRONT);</span><br></pre></td></tr></table></figure>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/23/opengl/opengl-triangle/" data-id="ck3cebh8x001h4cwkcqhs8eqg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/23/opengl/opengl-triangle/" data-id="ck3cmxsps000yk0wkfkev9u1o" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
