@@ -5,17 +5,13 @@
   
 
   
-  <title>heap | Hexo</title>
+  <title>Tag: opengl shader | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="非常简单的数据结构。唯一复杂的部分是down函数。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364#include &amp;lt;bits&#x2F;stdc++.h&amp;gt;typedef long long ll;usin">
-<meta name="keywords" content="heap">
-<meta property="og:type" content="article">
-<meta property="og:title" content="heap">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;17&#x2F;data_structure&#x2F;heap&#x2F;index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;tags&#x2F;opengl-shader&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="非常简单的数据结构。唯一复杂的部分是down函数。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364#include &amp;lt;bits&#x2F;stdc++.h&amp;gt;typedef long long ll;usin">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-17T16:55:06.362Z">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
@@ -63,63 +59,40 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-data_structure/heap" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/17/data_structure/heap/" class="article-date">
-  <time datetime="2019-11-17T16:54:12.000Z" itemprop="datePublished">2019-11-17</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
+        <section id="main">
   
-    <h1 class="article-title" itemprop="name">
-      heap
+  
+    
+    
+      
+      
+      <section class="archives-wrap">
+        <div class="archive-year-wrap">
+          <a href="/archives/2019" class="archive-year">2019</a>
+        </div>
+        <div class="archives">
+    
+    <article class="archive-article archive-type-post">
+  <div class="archive-article-inner">
+    <header class="archive-article-header">
+      <a href="/2019/11/24/opengl/opengl-shader-1/" class="archive-article-date">
+  <time datetime="2019-11-25T04:19:47.000Z" itemprop="datePublished">Nov 24</time>
+</a>
+      
+  
+    <h1 itemprop="name">
+      <a class="archive-article-title" href="/2019/11/24/opengl/opengl-shader-1/">opengl shader 1</a>
     </h1>
   
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>非常简单的数据结构。<br>唯一复杂的部分是down函数。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">heap</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;ll&gt; dat;</span><br><span class="line"></span><br><span class="line">    heap(): dat(<span class="number">1</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">up</span><span class="params">(ll k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dat[k / <span class="number">2</span>] &gt; dat[k]) &#123; swap(dat[k / <span class="number">2</span>], dat[k]); <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">has_left</span><span class="params">(ll k)</span> </span>&#123; <span class="keyword">return</span> k * <span class="number">2</span> &lt;= <span class="built_in">size</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">has_right</span><span class="params">(ll k)</span> </span>&#123; <span class="keyword">return</span> k * <span class="number">2</span> + <span class="number">1</span> &lt;= <span class="built_in">size</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">down</span><span class="params">(ll k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// return 0 -&gt; no change</span></span><br><span class="line">        <span class="comment">// return -1 -&gt; swap left son</span></span><br><span class="line">        <span class="comment">// return 1 -&gt; swap right son</span></span><br><span class="line">        <span class="keyword">if</span> (has_right(k)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dat[k] &lt;= <span class="built_in">min</span>(dat[k * <span class="number">2</span>], dat[k * <span class="number">2</span> + <span class="number">1</span>])) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (dat[k * <span class="number">2</span>] &lt; dat[k * <span class="number">2</span> + <span class="number">1</span>]) &#123; swap(dat[k], dat[k * <span class="number">2</span>]); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123; swap(dat[k], dat[k * <span class="number">2</span> + <span class="number">1</span>]); <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (has_left(k) &amp;&amp; dat[k * <span class="number">2</span>] &lt; dat[k]) &#123; swap(dat[k], dat[k * <span class="number">2</span>]); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(ll val)</span> </span>&#123;</span><br><span class="line">        dat.push_back(val);</span><br><span class="line">        ll k = dat.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (k != <span class="number">1</span> &amp;&amp; up(k)) &#123; k /= <span class="number">2</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">front</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> dat[<span class="number">1</span>]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        swap(dat[<span class="number">1</span>], dat[<span class="built_in">size</span>()]);</span><br><span class="line">        dat.pop_back();</span><br><span class="line">        ll op, k = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> ((op = down(k)) != <span class="number">0</span>) &#123; k = (op == <span class="number">-1</span> ? <span class="number">0</span> : <span class="number">1</span>) + k * <span class="number">2</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">size</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> dat.<span class="built_in">size</span>() - <span class="number">1</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    heap ins;</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; N;</span><br><span class="line">    <span class="keyword">while</span> (N--) &#123; <span class="keyword">int</span> n; <span class="built_in">cin</span> &gt;&gt; n; ins.push(n); &#125;</span><br><span class="line">    <span class="keyword">while</span> (ins.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ins.front();</span><br><span class="line">        ins.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/17/data_structure/heap/" data-id="ck3dzaqus000dccwk2czu6ncm" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
-
-    </footer>
+    </header>
   </div>
-  
-    
-<nav id="article-nav">
-  
-    <a href="/2019/11/18/tools/CMake-1/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          CMake-1
-        
-      </div>
-    </a>
-  
-  
-    <a href="/2019/11/16/hdu/hdu-2063/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">hdu 2063</div>
-    </a>
-  
-</nav>
-
-  
 </article>
+  
+  
+    </div></section>
+  
+
 
 </section>
         
