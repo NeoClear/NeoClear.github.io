@@ -61,6 +61,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-hdu/hdu-2063" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/16/hdu/hdu-2063/" class="article-date">
+  <time datetime="2019-11-17T04:43:01.000Z" itemprop="datePublished">2019-11-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/16/hdu/hdu-2063/">hdu 2063</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>真的，为什么，我的正确率总是这么低？？？<br>一开始做BZOJ的一道题，debug三小时还没法解决，只能换了一道HDU的模板题。。。</p>
+<p>幸好模板题还是挺简单的。<br>最重要的是extend部分。<br>使用函数调用栈非常巧妙地储存了中间值，却没有使用额外的变量。（妙啊）</p>
+<p>另外，最大匹配也可以使用最大流算法解决。<br>将二分图的左侧全部连到同一个source，右侧连到同一个dest，最大流就是最大匹配。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstdlib&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;cctype&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIZE 100010</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">read</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ll ans = <span class="number">0</span>; <span class="keyword">bool</span> f = <span class="literal">true</span>; <span class="keyword">char</span> ch = getchar();</span><br><span class="line">    <span class="keyword">while</span> (!<span class="built_in">isdigit</span>(ch)) &#123; <span class="keyword">if</span> (ch == <span class="string">'-'</span>) f = <span class="literal">false</span>; ch = getchar(); &#125;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">isdigit</span>(ch)) &#123; ans = ans * <span class="number">10</span> + ch - <span class="string">'0'</span>; ch = getchar(); &#125;</span><br><span class="line">    <span class="keyword">return</span> f ? ans : -ans;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Edge</span> &#123;</span></span><br><span class="line">    ll to, w, next;</span><br><span class="line">&#125; edges[SIZE];</span><br><span class="line"></span><br><span class="line">ll top = <span class="number">0</span>;</span><br><span class="line">ll K, M, N;</span><br><span class="line">ll vertex[SIZE];</span><br><span class="line"><span class="keyword">int</span> book[SIZE];</span><br><span class="line">ll match[SIZE];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> </span>&#123; <span class="built_in">memset</span>(edges, <span class="number">0</span>, <span class="keyword">sizeof</span>(edges)); <span class="built_in">memset</span>(vertex, <span class="number">0</span>, <span class="keyword">sizeof</span>(vertex)); <span class="built_in">memset</span>(match, <span class="number">0</span>, <span class="keyword">sizeof</span>(match)); top = <span class="number">0</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(ll from, ll to, ll w)</span> </span>&#123; edges[++top] = (Edge)&#123;to, w, vertex[from]&#125;; vertex[from] = top; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function">ll <span class="title">extend</span><span class="params">(ll cur)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (ll it = vertex[cur]; it; it = edges[it].next) &#123;</span><br><span class="line">        ll dest = edges[it].to;</span><br><span class="line">        <span class="keyword">if</span> (!book[dest]) &#123;</span><br><span class="line">            book[dest] = <span class="number">1</span>;</span><br><span class="line">            <span class="keyword">if</span> (match[dest] == <span class="number">0</span> || extend(match[dest])) &#123;</span><br><span class="line">                match[dest] = cur;</span><br><span class="line">                match[cur] = dest;</span><br><span class="line">                <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ll ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (ll i = <span class="number">1</span>; i &lt;= M + N; i++) &#123;</span><br><span class="line">        <span class="built_in">memset</span>(book, <span class="number">0</span>, <span class="keyword">sizeof</span>(book));</span><br><span class="line">        <span class="keyword">if</span> (!match[i]) &#123; ans += extend(i); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"%lld\n"</span>, ans);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> ((K = <span class="built_in">read</span>()) &amp;&amp; (M = <span class="built_in">read</span>()) &amp;&amp; (N = <span class="built_in">read</span>())) &#123;</span><br><span class="line">        init();</span><br><span class="line">        <span class="keyword">for</span> (ll i = <span class="number">0</span>; i &lt; K; i++) &#123;</span><br><span class="line">            ll g = <span class="built_in">read</span>(), b = <span class="built_in">read</span>();</span><br><span class="line">            insert(g, b + M, <span class="number">0</span>); insert(b + M, g, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        solve();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/16/hdu/hdu-2063/" data-id="ck3feh7se000if8wk361e2xat" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-data_structure/adjacency-table" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/16/data_structure/adjacency-table/" class="article-date">
@@ -88,7 +129,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/data_structure/adjacency-table/" data-id="ck3fcgavn0006x4wkgp198b5g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/data_structure/adjacency-table/" data-id="ck3feh7s50008f8wkgd4te60j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li></ul>
@@ -130,7 +171,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/bzoj/bzoj-2200/" data-id="ck3fcgawd000zx4wk8lgm94gc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/bzoj/bzoj-2200/" data-id="ck3feh7s40006f8wk6scnavtb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li></ul>
@@ -172,7 +213,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/poj/poj-1273-Drainage-Ditches/" data-id="ck3fcgax2001px4wk3jfn2yp8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/poj/poj-1273-Drainage-Ditches/" data-id="ck3feh7tv0035f8wk0n2c2kiz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poj/" rel="tag">poj</a></li></ul>
@@ -211,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/15/technique/high-precision/" data-id="ck3fcgax8001vx4wk129m4zla" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/15/technique/high-precision/" data-id="ck3feh7tz003df8wkb2bq97oa" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li></ul>
@@ -250,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/15/data_structure/hash-table/" data-id="ck3fcgavq0009x4wk0f6yaosk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/15/data_structure/hash-table/" data-id="ck3feh7s8000af8wk13tc1md2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li></ul>
@@ -290,7 +331,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/15/computing_geometry/graham-algorithm/" data-id="ck3fcgavm0005x4wk4o3726zw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/15/computing_geometry/graham-algorithm/" data-id="ck3feh7s20005f8wkaqkx8nlk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graham/" rel="tag">graham</a></li></ul>
@@ -329,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/13/template/" data-id="ck3fcgauw0000x4wk6bbk9wak" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/13/template/" data-id="ck3feh7rh0000f8wkbbz9di1w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/template/" rel="tag">template</a></li></ul>
@@ -370,7 +411,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/09/data_structure/binary-indexed-tree/" data-id="ck3fcgavp0008x4wkeaig02rv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/09/data_structure/binary-indexed-tree/" data-id="ck3feh7s60009f8wk7rm26upv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li></ul>
@@ -422,50 +463,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/09/data_structure/segment-tree/" data-id="ck3fcgawb000wx4wkahn0dwty" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/09/data_structure/segment-tree/" data-id="ck3feh7sc000ff8wk42hge1oc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" class="article-date">
-  <time datetime="2019-11-05T03:02:10.000Z" itemprop="datePublished">2019-11-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/">LeetCode 1239 Maximum Length of a Concatenated String with Unique Characters</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>又是一道bit manipulattion的题目，这周的出题人很喜欢bit啊。。。（我也比较喜欢bit<br>因为字母只有26个，所以可以将一个字符的出现视作对应bit上的1。<br>再进行搜索，尝试每个可能（数据规模允许</p>
-<p>有一个技巧：if num1 + num2 == num1 | num2，证明两个数的bit不重叠，反之亦然。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; bits;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; length;</span><br><span class="line">    <span class="keyword">int</span> max_len = <span class="number">0</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">solve</span><span class="params">(<span class="keyword">int</span> state, <span class="keyword">int</span> id, <span class="keyword">int</span> len)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (id == bits.<span class="built_in">size</span>())</span><br><span class="line">            max_len = <span class="built_in">max</span>(max_len, len);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> nt = id; nt &lt; bits.<span class="built_in">size</span>(); nt++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (bits[nt] + state == (bits[nt] | state)) &#123;</span><br><span class="line">                solve(state | bits[nt], nt + <span class="number">1</span>, len + length[nt]);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                max_len = <span class="built_in">max</span>(max_len, len);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">duplicate</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> flag = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">            <span class="keyword">if</span> (flag == (flag | (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>))))</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">            flag |= <span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxLength</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; arr)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; s : arr) &#123;</span><br><span class="line">            <span class="keyword">if</span> (duplicate(s))</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            <span class="keyword">int</span> state = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; c : s) &#123;</span><br><span class="line">                state |= (<span class="number">1</span> &lt;&lt; (c - <span class="string">'a'</span>));</span><br><span class="line">            &#125;</span><br><span class="line">            bits.push_back(state);</span><br><span class="line">            length.push_back(s.length());</span><br><span class="line">        &#125;</span><br><span class="line">        solve(<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">return</span> max_len;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/04/leetcode/LeetCode-1239-Maximum-Length-of-a-Concatenated-String-with-Unique-Characters/" data-id="ck3fcgawg0011x4wk9til2axb" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li></ul>
 
     </footer>
   </div>
@@ -492,7 +493,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-Test/" rel="tag">Google Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/" rel="tag">build</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/driver/" rel="tag">driver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtest/" rel="tag">gtest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-shader/" rel="tag">opengl shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-Test/" rel="tag">Google Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/" rel="tag">build</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/driver/" rel="tag">driver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtest/" rel="tag">gtest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-shader/" rel="tag">opengl shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-texture/" rel="tag">opengl texture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
     </div>
   </div>
 
@@ -502,7 +503,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12.5px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12.5px;">brute force</a> <a href="/tags/build/" style="font-size: 12.5px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 15px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 17.5px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12.5px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 15px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 17.5px;">opengl</a> <a href="/tags/opengl-shader/" style="font-size: 15px;">opengl shader</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 17.5px;">visual studio</a>
+      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12px;">brute force</a> <a href="/tags/build/" style="font-size: 12px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 14px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 16px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 14px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 18px;">opengl</a> <a href="/tags/opengl-shader/" style="font-size: 14px;">opengl shader</a> <a href="/tags/opengl-texture/" style="font-size: 10px;">opengl texture</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 18px;">visual studio</a>
     </div>
   </div>
 
@@ -524,6 +525,10 @@
       <ul>
         
           <li>
+            <a href="/2019/11/25/opengl/opengl-texture-1/">opengl texture 1</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/25/opengl/opengl-shader-3/">opengl shader 3</a>
           </li>
         
@@ -537,10 +542,6 @@
         
           <li>
             <a href="/2019/11/23/opengl/opengl-triangle/">opengl triangle</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/19/linux/driver/linux-driver-1/">linux driver-1</a>
           </li>
         
       </ul>
