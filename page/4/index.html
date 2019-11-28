@@ -61,6 +61,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" class="article-date">
+  <time datetime="2019-11-03T17:18:58.000Z" itemprop="datePublished">2019-11-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/">LeetCode 1249 Minimum Remove to Make Valid Parentheses</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这是一道非常简单的stack题，当时没想法完全事因为自己菜。。。<br>思路：<br>    遇到’(‘就将index入栈，遇到’)’时，假如stack为空，就记录当前index；假如不为空，就pop。<br>    全部完成后剩下的index为需要去除的parens。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// Actually simple</span></span><br><span class="line">    <span class="function"><span class="built_in">string</span> <span class="title">minRemoveToMakeValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; v;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == <span class="string">'('</span>)</span><br><span class="line">                v.push_back(i);</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (s[i] == <span class="string">')'</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (v.empty())</span><br><span class="line">                    s[i] = <span class="string">'*'</span>;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    v.pop_back();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">while</span> (!v.empty()) &#123;</span><br><span class="line">            s[v.back()] = <span class="string">'*'</span>;</span><br><span class="line">            v.pop_back();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Learn remove function</span></span><br><span class="line">        s.erase(<span class="built_in">remove</span>(s.<span class="built_in">begin</span>(), s.<span class="built_in">end</span>(), <span class="string">'*'</span>), s.<span class="built_in">end</span>());</span><br><span class="line">        <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这里原作者使用了一个remove函数。我们看下这个函数的源代码</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="class"><span class="keyword">class</span> <span class="title">ForwardIterator</span>, <span class="title">class</span> <span class="title">T</span>&gt;</span></span><br><span class="line"><span class="class"><span class="title">ForwardIterator</span> <span class="title">remove</span> (<span class="title">ForwardIterator</span> <span class="title">first</span>, <span class="title">ForwardIterator</span> <span class="title">last</span>, <span class="title">const</span> <span class="title">T</span>&amp; <span class="title">val</span>)</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    ForwardIterator result = first;</span><br><span class="line">    <span class="keyword">while</span> (first!=last) &#123;</span><br><span class="line">        <span class="keyword">if</span> (!(*first == val)) &#123;</span><br><span class="line">            *result = *first;</span><br><span class="line">            ++result;</span><br><span class="line">        &#125;</span><br><span class="line">        ++first;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段代码改变了原数组。<br>与参数匹配的block将被覆盖，并返回需要被删除的区块的head指针。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1249-Minimum-Remove-to-Make-Valid-Parentheses/" data-id="ck3i676db000wggwk3ajh1cb7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/stl/" rel="tag">stl</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" class="article-date">
@@ -89,7 +133,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck3i4svm5000xxcwkafa0adtt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/03/leetcode/LeetCode-1250-Check-If-It-Is-a-Good-Array/" data-id="ck3i676de000xggwk80smba12" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/math/" rel="tag">math</a></li></ul>
@@ -129,7 +173,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12px;">brute force</a> <a href="/tags/build/" style="font-size: 12px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 14px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 16px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 14px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 18px;">opengl</a> <a href="/tags/opengl-shader/" style="font-size: 14px;">opengl shader</a> <a href="/tags/opengl-texture/" style="font-size: 12px;">opengl texture</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 18px;">visual studio</a>
+      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12px;">brute force</a> <a href="/tags/build/" style="font-size: 12px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 14px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 16px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 14px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 18px;">opengl</a> <a href="/tags/opengl-shader/" style="font-size: 14px;">opengl shader</a> <a href="/tags/opengl-texture/" style="font-size: 14px;">opengl texture</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 18px;">visual studio</a>
     </div>
   </div>
 
@@ -151,6 +195,10 @@
       <ul>
         
           <li>
+            <a href="/2019/11/27/opengl/opengl-texture-3/">opengl texture 3</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/26/opengl/opengl-texture-2/">opengl texture 2</a>
           </li>
         
@@ -164,10 +212,6 @@
         
           <li>
             <a href="/2019/11/25/opengl/opengl-shader-2/">opengl shader 2</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/24/opengl/opengl-shader-1/">opengl shader 1</a>
           </li>
         
       </ul>
