@@ -61,6 +61,45 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-data_structure/heap" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/11/17/data_structure/heap/" class="article-date">
+  <time datetime="2019-11-17T16:54:12.000Z" itemprop="datePublished">2019-11-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/11/17/data_structure/heap/">heap</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>非常简单的数据结构。<br>唯一复杂的部分是down函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;bits/stdc++.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">long</span> <span class="keyword">long</span> ll;</span><br><span class="line"></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">heap</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">vector</span>&lt;ll&gt; dat;</span><br><span class="line"></span><br><span class="line">    heap(): dat(<span class="number">1</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">up</span><span class="params">(ll k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (dat[k / <span class="number">2</span>] &gt; dat[k]) &#123; swap(dat[k / <span class="number">2</span>], dat[k]); <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">has_left</span><span class="params">(ll k)</span> </span>&#123; <span class="keyword">return</span> k * <span class="number">2</span> &lt;= <span class="built_in">size</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">has_right</span><span class="params">(ll k)</span> </span>&#123; <span class="keyword">return</span> k * <span class="number">2</span> + <span class="number">1</span> &lt;= <span class="built_in">size</span>(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">down</span><span class="params">(ll k)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// return 0 -&gt; no change</span></span><br><span class="line">        <span class="comment">// return -1 -&gt; swap left son</span></span><br><span class="line">        <span class="comment">// return 1 -&gt; swap right son</span></span><br><span class="line">        <span class="keyword">if</span> (has_right(k)) &#123;</span><br><span class="line">            <span class="keyword">if</span> (dat[k] &lt;= <span class="built_in">min</span>(dat[k * <span class="number">2</span>], dat[k * <span class="number">2</span> + <span class="number">1</span>])) &#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;</span><br><span class="line">            <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (dat[k * <span class="number">2</span>] &lt; dat[k * <span class="number">2</span> + <span class="number">1</span>]) &#123; swap(dat[k], dat[k * <span class="number">2</span>]); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line">                <span class="keyword">else</span> &#123; swap(dat[k], dat[k * <span class="number">2</span> + <span class="number">1</span>]); <span class="keyword">return</span> <span class="number">1</span>; &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (has_left(k) &amp;&amp; dat[k * <span class="number">2</span>] &lt; dat[k]) &#123; swap(dat[k], dat[k * <span class="number">2</span>]); <span class="keyword">return</span> <span class="number">-1</span>; &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">push</span><span class="params">(ll val)</span> </span>&#123;</span><br><span class="line">        dat.push_back(val);</span><br><span class="line">        ll k = dat.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> (k != <span class="number">1</span> &amp;&amp; up(k)) &#123; k /= <span class="number">2</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">front</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> dat[<span class="number">1</span>]; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        swap(dat[<span class="number">1</span>], dat[<span class="built_in">size</span>()]);</span><br><span class="line">        dat.pop_back();</span><br><span class="line">        ll op, k = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span> ((op = down(k)) != <span class="number">0</span>) &#123; k = (op == <span class="number">-1</span> ? <span class="number">0</span> : <span class="number">1</span>) + k * <span class="number">2</span>; &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function">ll <span class="title">size</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> dat.<span class="built_in">size</span>() - <span class="number">1</span>; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    heap ins;</span><br><span class="line">    <span class="keyword">int</span> N;</span><br><span class="line">    <span class="built_in">cin</span> &gt;&gt; N;</span><br><span class="line">    <span class="keyword">while</span> (N--) &#123; <span class="keyword">int</span> n; <span class="built_in">cin</span> &gt;&gt; n; ins.push(n); &#125;</span><br><span class="line">    <span class="keyword">while</span> (ins.<span class="built_in">size</span>()) &#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; ins.front();</span><br><span class="line">        ins.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2019/11/17/data_structure/heap/" data-id="ck3i4svln0009xcwk5qszhz5i" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/heap/" rel="tag">heap</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hdu/hdu-2063" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2019/11/16/hdu/hdu-2063/" class="article-date">
@@ -90,7 +129,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/hdu/hdu-2063/" data-id="ck3feh7se000if8wk361e2xat" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/hdu/hdu-2063/" data-id="ck3i4svlv000kxcwkcoimd7im" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li></ul>
@@ -129,7 +168,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/data_structure/adjacency-table/" data-id="ck3feh7s50008f8wkgd4te60j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/data_structure/adjacency-table/" data-id="ck3i4svlp000axcwk0b55cq7y" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graph/" rel="tag">graph</a></li></ul>
@@ -171,7 +210,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/bzoj/bzoj-2200/" data-id="ck3feh7s40006f8wk6scnavtb" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/bzoj/bzoj-2200/" data-id="ck3i4svlj0005xcwk64zz7wmy" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li></ul>
@@ -213,7 +252,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/16/poj/poj-1273-Drainage-Ditches/" data-id="ck3feh7tv0035f8wk0n2c2kiz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/16/poj/poj-1273-Drainage-Ditches/" data-id="ck3i4svmi001axcwk82no5s5f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/poj/" rel="tag">poj</a></li></ul>
@@ -252,7 +291,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/15/technique/high-precision/" data-id="ck3feh7tz003df8wkb2bq97oa" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/15/technique/high-precision/" data-id="ck3i4svmn001hxcwk35f6b943" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li></ul>
@@ -291,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/15/data_structure/hash-table/" data-id="ck3feh7s8000af8wk13tc1md2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/15/data_structure/hash-table/" data-id="ck3i4svlt000fxcwk79rmhfk9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li></ul>
@@ -331,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/15/computing_geometry/graham-algorithm/" data-id="ck3feh7s20005f8wkaqkx8nlk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/15/computing_geometry/graham-algorithm/" data-id="ck3i4svlm0008xcwkdlk7cc64" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/graham/" rel="tag">graham</a></li></ul>
@@ -370,7 +409,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/13/template/" data-id="ck3feh7rh0000f8wkbbz9di1w" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/13/template/" data-id="ck3i4svkl0000xcwk8h6qazzu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/template/" rel="tag">template</a></li></ul>
@@ -411,62 +450,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/09/data_structure/binary-indexed-tree/" data-id="ck3feh7s60009f8wk7rm26upv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/09/data_structure/binary-indexed-tree/" data-id="ck3i4svll0006xcwkamu4ehru" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-data_structure/segment-tree" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/09/data_structure/segment-tree/" class="article-date">
-  <time datetime="2019-11-10T02:40:45.000Z" itemprop="datePublished">2019-11-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/09/data_structure/segment-tree/">segment tree</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>线段树，常见却又复杂。<br>其基本原理较为简单，但实现中有这种各样的细节需要注意。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment_node</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> left;</span><br><span class="line">    <span class="keyword">int</span> right;</span><br><span class="line">    <span class="keyword">int</span> weight;</span><br><span class="line">    <span class="keyword">int</span> lazy;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">segment_node</span> <span class="title">tree</span>[<span class="title">size</span> * 4 + 1];</span></span><br></pre></td></tr></table></figure>
-<p>其中lazy值为此区间的子区间的延迟更新值</p>
-<p>第一步是建树过程。<br>数组大小为N * 4 + 1。最好再加点量（</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// build segment tree</span></span><br><span class="line"><span class="comment">// param: k -&gt; index of segment node in the array</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k].left = left;</span><br><span class="line">    tree[k].right = right;</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (left == right) &#123;</span><br><span class="line">        <span class="built_in">cin</span> &gt;&gt; tree[k].weight;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">int</span> mid = (left + right) / <span class="number">2</span>;</span><br><span class="line">    build(left, mid, k * <span class="number">2</span>);</span><br><span class="line">    build(mid + <span class="number">1</span>, right, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>线段树有两种基本操作：区间更新和求区间和。其他操作皆可由求和和更新得到（比如point更新</p>
-<p>区间更新<br>注意在update区间时需要同时更新weight和lazy。lazy是此区间的子区间的延迟更新，不包含当前区间的延迟更新。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> addition, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j) &#123;</span><br><span class="line">        tree[k].weight += addition * (tree[k].right - tree[k].left + <span class="number">1</span>);</span><br><span class="line">        tree[k].lazy += addition;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        update(i, j, addition, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        update(i, j, addition, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    tree[k].weight = tree[k * <span class="number">2</span>].weight + tree[k * <span class="number">2</span> + <span class="number">1</span>].weight;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>区间求和<br>原理和update类似</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// get the sum of the range</span></span><br><span class="line"><span class="comment">// param: i, j represents interval [i, j]</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> i, <span class="keyword">int</span> j, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].left &gt;= i &amp;&amp; tree[k].right &lt;= j)</span><br><span class="line">        <span class="keyword">return</span> tree[k].weight;</span><br><span class="line">    <span class="keyword">if</span> (tree[k].lazy)</span><br><span class="line">        down(k);</span><br><span class="line">    <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> mid = (tree[k].left + tree[k].right) / <span class="number">2</span>;</span><br><span class="line">    <span class="keyword">if</span> (i &lt;= mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">if</span> (j &gt; mid)</span><br><span class="line">        ans += sum(i, j, k * <span class="number">2</span> + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">return</span> ans;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>当然，最重要的还是我们的down函数了。down函数使得延迟更新成为可能。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    tree[k * <span class="number">2</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].lazy += tree[k].lazy;</span><br><span class="line">    tree[k * <span class="number">2</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span>].right - tree[k * <span class="number">2</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k * <span class="number">2</span> + <span class="number">1</span>].weight += tree[k].lazy * (tree[k * <span class="number">2</span> + <span class="number">1</span>].right - tree[k * <span class="number">2</span> + <span class="number">1</span>].left + <span class="number">1</span>);</span><br><span class="line">    tree[k].lazy = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/09/data_structure/segment-tree/" data-id="ck3feh7sc000ff8wk42hge1oc" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li></ul>
 
     </footer>
   </div>
@@ -479,7 +466,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&amp;laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next &amp;raquo;</a>
   </nav>
 
 </section>
@@ -503,7 +490,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12px;">brute force</a> <a href="/tags/build/" style="font-size: 12px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 14px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 16px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 14px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 18px;">opengl</a> <a href="/tags/opengl-shader/" style="font-size: 14px;">opengl shader</a> <a href="/tags/opengl-texture/" style="font-size: 10px;">opengl texture</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 18px;">visual studio</a>
+      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12px;">brute force</a> <a href="/tags/build/" style="font-size: 12px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 14px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 16px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 20px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 14px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 18px;">opengl</a> <a href="/tags/opengl-shader/" style="font-size: 14px;">opengl shader</a> <a href="/tags/opengl-texture/" style="font-size: 12px;">opengl texture</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 18px;">visual studio</a>
     </div>
   </div>
 
@@ -525,6 +512,10 @@
       <ul>
         
           <li>
+            <a href="/2019/11/26/opengl/opengl-texture-2/">opengl texture 2</a>
+          </li>
+        
+          <li>
             <a href="/2019/11/25/opengl/opengl-texture-1/">opengl texture 1</a>
           </li>
         
@@ -538,10 +529,6 @@
         
           <li>
             <a href="/2019/11/24/opengl/opengl-shader-1/">opengl shader 1</a>
-          </li>
-        
-          <li>
-            <a href="/2019/11/23/opengl/opengl-triangle/">opengl triangle</a>
           </li>
         
       </ul>
