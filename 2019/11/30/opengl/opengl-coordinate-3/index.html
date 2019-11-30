@@ -7,16 +7,18 @@
   
   <title>opengl coordinate 3 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="keywords" content="opengl,visual studio,opengl coordinate system">
+  <meta name="description" content="重点： 12345678910111213141516171819for (unsigned int i = 0; i &amp;lt; 10; i++) &amp;#123;    glm::mat4 modelMat2;    modelMat2 = glm::translate(modelMat2, cubePositions[i]);    testShader-&amp;gt;use();    &#x2F;&#x2F; 将材质">
+<meta name="keywords" content="opengl,visual studio,opengl coordinate system">
 <meta property="og:type" content="article">
 <meta property="og:title" content="opengl coordinate 3">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;30&#x2F;opengl&#x2F;opengl-coordinate-3&#x2F;index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="重点： 12345678910111213141516171819for (unsigned int i = 0; i &amp;lt; 10; i++) &amp;#123;    glm::mat4 modelMat2;    modelMat2 = glm::translate(modelMat2, cubePositions[i]);    testShader-&amp;gt;use();    &#x2F;&#x2F; 将材质">
 <meta property="og:locale" content="en">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;30&#x2F;opengl&#x2F;opengl-coordinate-3&#x2F;img&#x2F;multiple_cube.png">
-<meta property="og:updated_time" content="2019-11-30T19:59:01.932Z">
+<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;30&#x2F;opengl&#x2F;opengl-coordinate-3&#x2F;img&#x2F;opengl&#x2F;multiple_cube.png">
+<meta property="og:updated_time" content="2019-11-30T20:04:46.094Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;30&#x2F;opengl&#x2F;opengl-coordinate-3&#x2F;img&#x2F;multiple_cube.png">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;30&#x2F;opengl&#x2F;opengl-coordinate-3&#x2F;img&#x2F;opengl&#x2F;multiple_cube.png">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -85,12 +87,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="img/multiple_cube.png" alt="coordinate system"></p>
+        <p><img src="img/opengl/multiple_cube.png" alt="coordinate system"></p>
+<p>重点：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    glm::mat4 modelMat2;</span><br><span class="line">    modelMat2 = glm::translate(modelMat2, cubePositions[i]);</span><br><span class="line">    testShader-&gt;use();</span><br><span class="line">    <span class="comment">// 将材质uniform变量设置为int值，从0至15</span></span><br><span class="line">    <span class="comment">// 鬼晓得是咋回事，这不是贴图变量吗？？？</span></span><br><span class="line">    glUniform1i(glGetUniformLocation(testShader-&gt;ID, <span class="string">"ourTexture"</span>), <span class="number">0</span>);</span><br><span class="line">    glUniform1i(glGetUniformLocation(testShader-&gt;ID, <span class="string">"ourTexture"</span>), <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, "transform"),</span></span><br><span class="line"><span class="comment">                        1, GL_FALSE, glm::value_ptr(trans));*/</span></span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"modelMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(modelMat2));</span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"viewMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(viewMat));</span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"projMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(projMat));</span><br><span class="line">    glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">36</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用一个循环读取每个顶点的数据，绘制一个正方体</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/30/opengl/opengl-coordinate-3/" data-id="ck3lzzt7t00163swkawj24d4g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/30/opengl/opengl-coordinate-3/" data-id="ck3m01xep0015awwk1615008h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-coordinate-system/" rel="tag">opengl coordinate system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>

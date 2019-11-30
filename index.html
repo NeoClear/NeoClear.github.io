@@ -83,12 +83,16 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="img/multiple_cube.png" alt="coordinate system"></p>
+        <p><img src="img/opengl/multiple_cube.png" alt="coordinate system"></p>
+<p>重点：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    glm::mat4 modelMat2;</span><br><span class="line">    modelMat2 = glm::translate(modelMat2, cubePositions[i]);</span><br><span class="line">    testShader-&gt;use();</span><br><span class="line">    <span class="comment">// 将材质uniform变量设置为int值，从0至15</span></span><br><span class="line">    <span class="comment">// 鬼晓得是咋回事，这不是贴图变量吗？？？</span></span><br><span class="line">    glUniform1i(glGetUniformLocation(testShader-&gt;ID, <span class="string">"ourTexture"</span>), <span class="number">0</span>);</span><br><span class="line">    glUniform1i(glGetUniformLocation(testShader-&gt;ID, <span class="string">"ourTexture"</span>), <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, "transform"),</span></span><br><span class="line"><span class="comment">                        1, GL_FALSE, glm::value_ptr(trans));*/</span></span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"modelMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(modelMat2));</span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"viewMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(viewMat));</span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"projMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(projMat));</span><br><span class="line">    glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">36</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>用一个循环读取每个顶点的数据，绘制一个正方体</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/30/opengl/opengl-coordinate-3/" data-id="ck3lzzt7t00163swkawj24d4g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/30/opengl/opengl-coordinate-3/" data-id="ck3m01xep0015awwk1615008h" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-coordinate-system/" rel="tag">opengl coordinate system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -131,7 +135,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/30/opengl/opengl-coordinate-2/" data-id="ck3lzzt7r00113swkewis25or" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/30/opengl/opengl-coordinate-2/" data-id="ck3m01xel000yawwke2j31u0d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-coordinate-system/" rel="tag">opengl coordinate system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -180,7 +184,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/29/opengl/opengl-coordinate-1/" data-id="ck3lzzt7q000z3swkgaz1d6rw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/29/opengl/opengl-coordinate-1/" data-id="ck3m01xen0012awwkg76yafdj" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-coordinate-system/" rel="tag">opengl coordinate system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -226,7 +230,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/27/opengl/opengl-transformation-1/" data-id="ck3lzzt83001j3swkfyeibakx" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/27/opengl/opengl-transformation-1/" data-id="ck3m01xex001fawwk6och737j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-transformation/" rel="tag">opengl transformation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -278,7 +282,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/27/opengl/opengl-texture-3/" data-id="ck3lzzt83001h3swkazzj7mgz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/27/opengl/opengl-texture-3/" data-id="ck3m01xez001hawwk8dhth6ym" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-texture/" rel="tag">opengl texture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -337,7 +341,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/26/opengl/opengl-texture-2/" data-id="ck3lzzt81001e3swk98la914i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/26/opengl/opengl-texture-2/" data-id="ck3m01xeu001cawwkhplu3hij" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-texture/" rel="tag">opengl texture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -383,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/25/opengl/opengl-texture-1/" data-id="ck3lzzt7y00193swk9z7ugg6j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/25/opengl/opengl-texture-1/" data-id="ck3m01xew001eawwk01bb09le" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-texture/" rel="tag">opengl texture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -427,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/25/opengl/opengl-shader-3/" data-id="ck3lzzt81001c3swk7fjh2496" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/25/opengl/opengl-shader-3/" data-id="ck3m01xer0017awwk5ige4r8j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-shader/" rel="tag">opengl shader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -476,7 +480,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/25/opengl/opengl-shader-2/" data-id="ck3lzzt7x00173swkgefq3znu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/25/opengl/opengl-shader-2/" data-id="ck3m01xet001aawwka9ncg7ju" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-shader/" rel="tag">opengl shader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
@@ -528,7 +532,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2019/11/24/opengl/opengl-shader-1/" data-id="ck3lzzt7s00143swk57mp2u2l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2019/11/24/opengl/opengl-shader-1/" data-id="ck3m01xeq0016awwk0ew23kx1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-shader/" rel="tag">opengl shader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
