@@ -11,6 +11,8 @@
 <p>Local Space：<br>相对于本地的坐标</p>
 <p>World Space：<br>在整个世界的坐标</p>
 <p>Camera：<br>摄像机有个拍摄坐标和角度</p>
+<a id="more"></a>
+
 <p>生成坐标的代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">glm::mat4 modelMat;</span><br><span class="line">modelMat = glm::rotate(modelMat, glm::radians(<span class="number">-55.0f</span>), glm::vec3(<span class="number">1.0f</span>, <span class="number">0.0f</span>, <span class="number">0.0f</span>));</span><br><span class="line">glm::mat4 viewMat;</span><br><span class="line">viewMat = glm::translate(viewMat, glm::vec3(<span class="number">0.0f</span>, <span class="number">0.0f</span>, <span class="number">-3.0f</span>));</span><br><span class="line">glm::mat4 projMat = glm::perspective(glm::radians(<span class="number">45.0f</span>), <span class="number">800.0f</span> / <span class="number">600.0f</span>, <span class="number">0.1f</span>, <span class="number">100.0f</span>);</span><br></pre></td></tr></table></figure>
 
