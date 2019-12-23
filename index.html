@@ -1,143 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  
-
-  
-  <title>Hexo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http:&#x2F;&#x2F;neoclear.github.io&#x2F;index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:locale" content="en">
-<meta name="twitter:card" content="summary">
-  
-    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
-  
-  
-    <link rel="icon" href="/favicon.png">
-  
-  
-    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
-  
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-
-<body>
-  <div id="container">
-    <div id="wrap">
-      <header id="header">
-  <div id="banner"></div>
-  <div id="header-outer" class="outer">
-    <div id="header-title" class="inner">
-      <h1 id="logo-wrap">
-        <a href="/" id="logo">Hexo</a>
-      </h1>
-      
-    </div>
-    <div id="header-inner" class="inner">
-      <nav id="main-nav">
-        <a id="main-nav-toggle" class="nav-icon"></a>
-        
-          <a class="main-nav-link" href="/">Home</a>
-        
-          <a class="main-nav-link" href="/archives">Archives</a>
-        
-      </nav>
-      <nav id="sub-nav">
-        
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
-        
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
-      </nav>
-      <div id="search-form-wrap">
-        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://neoclear.github.io"></form>
-      </div>
-    </div>
-  </div>
-</header>
-      <div class="outer">
-        <section id="main">
-  
-    <article id="post-leetcode/leetcode-weekly-contest-168" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/22/leetcode/leetcode-weekly-contest-168/" class="article-date">
-  <time datetime="2019-12-22T20:16:34.000Z" itemprop="datePublished">2019-12-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/22/leetcode/leetcode-weekly-contest-168/">leetcode weekly contest 168</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Now i tried to use python to solve these weekly contests… An awesome approach.<br>However, c++ is still a very powerful programing language, use it!</p>
-<p>If interested, you can try other languages like kotlin, go, etc.</p>
-<h2 id="1295-Find-Numbers-with-Even-Number-of-Digits"><a href="#1295-Find-Numbers-with-Even-Number-of-Digits" class="headerlink" title="1295. Find Numbers with Even Number of Digits"></a>1295. Find Numbers with Even Number of Digits</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python3</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">is_even</span><span class="params">(self, num: int)</span> -&gt; bool:</span></span><br><span class="line">        num = abs(num)</span><br><span class="line">        cnt = <span class="number">0</span></span><br><span class="line">        <span class="keyword">while</span> num != <span class="number">0</span>:</span><br><span class="line">            num //= <span class="number">10</span></span><br><span class="line">            cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cnt % <span class="number">2</span> == <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">findNumbers</span><span class="params">(self, nums: List[int])</span> -&gt; int:</span></span><br><span class="line">        cnt = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> it <span class="keyword">in</span> nums:</span><br><span class="line">            <span class="keyword">if</span> self.is_even(it):</span><br><span class="line">                cnt += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cnt</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// c++</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">is_even</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (; n; n /= <span class="number">10</span>, cnt++) &#123;&#125;</span><br><span class="line">        <span class="keyword">return</span> cnt % <span class="number">2</span> == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">findNumbers</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : nums) &#123;</span><br><span class="line">            <span class="keyword">if</span> (is_even(it)) &#123; cnt++; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="1296-Divide-Array-in-Sets-of-K-Consecutive-Numbers"><a href="#1296-Divide-Array-in-Sets-of-K-Consecutive-Numbers" class="headerlink" title="1296. Divide Array in Sets of K Consecutive Numbers"></a>1296. Divide Array in Sets of K Consecutive Numbers</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">isPossibleDivide</span><span class="params">(self, nums: List[int], k: int)</span> -&gt; bool:</span></span><br><span class="line">        cnt = Counter(nums)</span><br><span class="line">        keys = sorted(cnt.keys())</span><br><span class="line">        <span class="keyword">for</span> n <span class="keyword">in</span> keys:</span><br><span class="line">            <span class="keyword">if</span> cnt[n] &gt; <span class="number">0</span>:</span><br><span class="line">                minus = cnt[n]</span><br><span class="line">                <span class="keyword">for</span> i <span class="keyword">in</span> range(n, n + k):</span><br><span class="line">                    <span class="keyword">if</span> cnt[i] &lt; minus:</span><br><span class="line">                        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">                    cnt[i] -= minus</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// c++</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isPossibleDivide</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="keyword">int</span>, <span class="keyword">int</span>&gt; count;</span><br><span class="line">        <span class="built_in">set</span>&lt;<span class="keyword">int</span>&gt; keys;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : nums) &#123; count[it]++; &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : nums) &#123; keys.insert(it); &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : keys) &#123;</span><br><span class="line">            <span class="keyword">if</span> (count[it] == <span class="number">0</span>) &#123; <span class="keyword">continue</span>; &#125;</span><br><span class="line">            <span class="keyword">int</span> minus = count[it];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = it; i &lt; it + k; i++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (count[i] &lt; minus) &#123; <span class="keyword">return</span> <span class="literal">false</span>; &#125;</span><br><span class="line">                count[i] -= minus;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h2 id="1297-Maximum-Number-of-Occurrences-of-a-Substring"><a href="#1297-Maximum-Number-of-Occurrences-of-a-Substring" class="headerlink" title="1297. Maximum Number of Occurrences of a Substring"></a>1297. Maximum Number of Occurrences of a Substring</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># python</span></span><br><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">import</span> collections</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxFreq</span><span class="params">(self, s: str, maxLetters: int, minSize: int, maxSize: int)</span> -&gt; int:</span></span><br><span class="line">        cnt = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> b <span class="keyword">in</span> range(len(s) - minSize + <span class="number">1</span>):</span><br><span class="line">            w = s[b: b + minSize]</span><br><span class="line">            <span class="keyword">if</span> len(collections.Counter(w)) &gt; maxLetters:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            <span class="keyword">if</span> w <span class="keyword">not</span> <span class="keyword">in</span> cnt:</span><br><span class="line">                cnt[w] = <span class="number">0</span></span><br><span class="line">            cnt[w] += <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> max(cnt.values()) <span class="keyword">if</span> len(cnt) != <span class="number">0</span> <span class="keyword">else</span> <span class="number">0</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// c++</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxFreq</span><span class="params">(<span class="built_in">string</span> s, <span class="keyword">int</span> maxLetters, <span class="keyword">int</span> minSize, <span class="keyword">int</span> maxSize)</span> </span>&#123;</span><br><span class="line">        <span class="built_in">unordered_map</span>&lt;<span class="built_in">string</span>, <span class="keyword">int</span>&gt; occur;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; s.length() - minSize + <span class="number">1</span>; i++) &#123;</span><br><span class="line">            <span class="built_in">string</span> w = s.substr(i, minSize);</span><br><span class="line">            <span class="built_in">unordered_set</span>&lt;<span class="keyword">char</span>&gt; cnt(w.<span class="built_in">begin</span>(), w.<span class="built_in">end</span>());</span><br><span class="line">            <span class="keyword">if</span> (cnt.<span class="built_in">size</span>() &lt;= maxLetters) &#123; occur[s.substr(i, minSize)]++; &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> ans = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; kv : occur) &#123;</span><br><span class="line">            ans = <span class="built_in">max</span>(ans, kv.second);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-
-<h1 id="1298-Maximum-Candies-You-Can-Get-from-Boxes"><a href="#1298-Maximum-Candies-You-Can-Get-from-Boxes" class="headerlink" title="1298. Maximum Candies You Can Get from Boxes"></a>1298. Maximum Candies You Can Get from Boxes</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> typing <span class="keyword">import</span> List</span><br><span class="line"><span class="keyword">from</span> collections <span class="keyword">import</span> Counter</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">maxCandies</span><span class="params">(self, status: List[int], candies: List[int], keys: List[List[int]], containedBoxes: List[List[int]], initialBoxes: List[int])</span> -&gt; int:</span></span><br><span class="line">        cnt = <span class="number">0</span></span><br><span class="line">        size = len(status)</span><br><span class="line">        key = [<span class="number">0</span>] * size</span><br><span class="line">        visiting = Counter(initialBoxes)</span><br><span class="line">        visited = Counter()</span><br><span class="line">        changed = <span class="literal">True</span></span><br><span class="line">        <span class="keyword">while</span> changed:</span><br><span class="line">            changed = <span class="literal">False</span></span><br><span class="line">            remove = []</span><br><span class="line">            insert = []</span><br><span class="line">            <span class="keyword">for</span> box <span class="keyword">in</span> visiting:</span><br><span class="line">                <span class="keyword">if</span> status[box] == <span class="number">1</span> <span class="keyword">or</span> key[box] == <span class="number">1</span>:</span><br><span class="line">                    changed = <span class="literal">True</span></span><br><span class="line">                    cnt += candies[box]</span><br><span class="line">                    remove.append(box)</span><br><span class="line">                    visited[box] = <span class="number">1</span></span><br><span class="line">                    <span class="keyword">for</span> dest <span class="keyword">in</span> containedBoxes[box]:</span><br><span class="line">                        <span class="keyword">if</span> dest <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                            insert.append(dest)</span><br><span class="line">                    <span class="keyword">for</span> k <span class="keyword">in</span> keys[box]:</span><br><span class="line">                        key[k] = <span class="number">1</span></span><br><span class="line">            <span class="keyword">for</span> b <span class="keyword">in</span> remove:</span><br><span class="line">                <span class="keyword">del</span> visiting[b]</span><br><span class="line">            <span class="keyword">for</span> b <span class="keyword">in</span> insert:</span><br><span class="line">                visiting[b] = <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> cnt</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// c++</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">maxCandies</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; status, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; candies, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; keys, <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; containedBoxes, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; initialBoxes)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> <span class="built_in">size</span> = status.<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; visiting(initialBoxes.<span class="built_in">begin</span>(), initialBoxes.<span class="built_in">end</span>());</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; visited;</span><br><span class="line">        <span class="built_in">unordered_set</span>&lt;<span class="keyword">int</span>&gt; has_key;</span><br><span class="line">        <span class="keyword">int</span> cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">bool</span> changed = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">while</span> (changed) &#123;</span><br><span class="line">            changed = <span class="literal">false</span>;</span><br><span class="line">            <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; insert, <span class="built_in">remove</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; box : visiting) &#123;</span><br><span class="line">                <span class="keyword">if</span> (status[box] || has_key.count(box)) &#123;</span><br><span class="line">                    changed = <span class="literal">true</span>;</span><br><span class="line">                    cnt += candies[box];</span><br><span class="line">                    <span class="built_in">remove</span>.push_back(box);</span><br><span class="line">                    visited.insert(box);</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; k : keys[box])</span><br><span class="line">                        has_key.insert(k);</span><br><span class="line">                    <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; dest : containedBoxes[box])</span><br><span class="line">                        <span class="keyword">if</span> (!visited.count(dest))</span><br><span class="line">                            insert.push_back(dest);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : insert)</span><br><span class="line">                visiting.insert(it);</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : <span class="built_in">remove</span>)</span><br><span class="line">                visiting.erase(it);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> cnt;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/22/leetcode/leetcode-weekly-contest-168/" data-id="ck4hixd88000zusvqb9kzgbvb" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/weekly-contest/" rel="tag">weekly contest</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-technique/python-silver-bullet" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/22/technique/python-silver-bullet/" class="article-date">
-  <time datetime="2019-12-22T09:16:11.000Z" itemprop="datePublished">2019-12-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/22/technique/python-silver-bullet/">python silver bullet</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="collections"><a href="#collections" class="headerlink" title="collections"></a>collections</h2><h3 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h3><p>It is a class that is similar to unordered_map in c++. It is a subclass of dict. When there is no such key in Counter, it will return a 0 (just like unordered_map in c++). Let’s see its method calls.</p>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta name="description" content=""><meta name="keywords" content=""><meta name="author" content="NeoClear"><meta name="copyright" content="NeoClear"><title>Star Path</title><link rel="shortcut icon" href="/melody-favicon.ico"><link rel="stylesheet" href="/css/index.css?version=1.6.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@latest/css/font-awesome.min.css?version=1.6.1"><link rel="dns-prefetch" href="https://cdn.staticfile.org"><link rel="dns-prefetch" href="https://cdn.bootcss.com"><link rel="dns-prefetch" href="https://creativecommons.org"><script>var GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  }
+} </script></head><body><i class="fa fa-arrow-right" id="toggle-sidebar" aria-hidden="true"></i><div id="sidebar"><div class="author-info"><div class="author-info__avatar text-center"><img src="/img/avatar.png"></div><div class="author-info__name text-center">NeoClear</div><div class="author-info__description text-center"></div><hr><div class="author-info-articles"><a class="author-info-articles__archives article-meta" href="/archives"><span class="pull-left">Articles</span><span class="pull-right">46</span></a><a class="author-info-articles__tags article-meta" href="/tags"><span class="pull-left">Tags</span><span class="pull-right">62</span></a></div></div></div><nav class="no-bg" id="nav"><div id="page-header"><span class="pull-left"> <a id="site-name" href="/">Star Path</a></span><i class="fa fa-bars toggle-menu pull-right" aria-hidden="true"></i><span class="pull-right menus"><a class="site-page" href="/">Home</a><a class="site-page" href="/archives">Archives</a><a class="site-page" href="/tags">Tags</a><a class="site-page" href="/categories">Categories</a></span></div><div id="site-info"><div id="site-title">Star Path</div><div id="site-sub-title"></div></div></nav><div id="content-outer"><div class="layout" id="content-inner"><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/22/programing%20languages/java-notes/">java notes</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-22</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/java/">java</a></span><div class="content"><p>start learning java now!!!</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/22/leetcode/leetcode-weekly-contest-168/">leetcode weekly contest 168</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-22</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/leetcode/">leetcode</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/weekly-contest/">weekly contest</a></span><div class="content"><p>Now i tried to use python to solve these weekly contests… An awesome approach.<br>However, c++ is still a very powerful programing language, use it!</p>
+<p>If interested, you can try other languages like kotlin, go, etc.</p></div><a class="more" href="/2019/12/22/leetcode/leetcode-weekly-contest-168/#more">Read more</a><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/22/technique/python-silver-bullet/">python silver bullet</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-22</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/python/">python</a></span><div class="content"><h2 id="collections"><a href="#collections" class="headerlink" title="collections"></a>collections</h2><h3 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h3><p>It is a class that is similar to unordered_map in c++. It is a subclass of dict. When there is no such key in Counter, it will return a 0 (just like unordered_map in c++). Let’s see its method calls.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">t = Counter(<span class="string">"234u934979282fehgre"</span>)</span><br><span class="line">t = Counter([<span class="number">431</span>, <span class="number">432</span>, <span class="number">543</span>, <span class="number">543</span>, <span class="number">543</span>, <span class="number">5423</span>, <span class="number">6532</span>])</span><br><span class="line">t = Counter(&#123;<span class="string">"inno"</span>: <span class="number">999</span>&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>if you want to get its elements with duplications, you can do as follows.</p>
@@ -148,45 +20,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">t = Counter(<span class="string">"innovation"</span>)</span><br><span class="line">t.values()</span><br></pre></td></tr></table></figure>
 
 <p>and it will return an dict_value object (just like dict.values())</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/22/technique/python-silver-bullet/" data-id="ck4hixdaq005xusvqbv0a72r3" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/python/" rel="tag">python</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-technique/cplusplus-silver-bullet" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/19/technique/cplusplus-silver-bullet/" class="article-date">
-  <time datetime="2019-12-19T17:40:23.000Z" itemprop="datePublished">2019-12-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/19/technique/cplusplus-silver-bullet/">c++ silver bullet</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>翻转一个vector</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/19/technique/cplusplus-silver-bullet/">c++ silver bullet</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-19</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/c/">c++</a></span><div class="content"><h2 id="std"><a href="#std" class="headerlink" title="std"></a>std</h2><p>翻转一个vector</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; t = &#123;<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>&#125;;</span><br><span class="line">reverse(t.<span class="built_in">begin</span>(), t.<span class="built_in">end</span>());</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; it : t)</span><br><span class="line">    <span class="built_in">cout</span> &lt;&lt; it &lt;&lt; <span class="string">" "</span>;</span><br><span class="line"><span class="comment">// it will print 5 4 3 2 1</span></span><br></pre></td></tr></table></figure>
 
 <p>remove函数<br>先放源码</p>
@@ -195,86 +29,16 @@
 <p>大意就是将区间内与val相同的value放到区间的最后，并返回第一个值为val的地址。</p>
 <p>tie函数<br>更加方便将tuple的值直接assign到多个变量。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">queue</span>&lt;tuple&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; q;</span><br><span class="line"><span class="keyword">int</span> tx, ty, to;</span><br><span class="line">tie(tx, ty, to) = q.front(); q.pop();</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/19/technique/cplusplus-silver-bullet/" data-id="ck4hixdai005jusvqgh934k6g" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c++</a></li></ul>
 
-    </footer>
-  </div>
-  
-</article>
+<h2 id="string"><a href="#string" class="headerlink" title="string"></a>string</h2><p>how to get a slice of a string?<br>use substr method call.</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s.substr(i, length)</span><br></pre></td></tr></table></figure>
 
-
-  
-    <article id="post-leetcode/LeetCode-1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/19/leetcode/LeetCode-1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination/" class="article-date">
-  <time datetime="2019-12-19T17:26:13.000Z" itemprop="datePublished">2019-12-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/19/leetcode/LeetCode-1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination/">LeetCode 1293 Shortest Path in a Grid with Obstacles Elimination</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这道题乍一看挺复杂的，不能直接套用bfs的模板做题。但其实理解了题目之后就非常简单了。。。（说到底就是智商不够）。</p>
+<p>i indicates the index of first character and length stands for the length of the slice.</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/19/leetcode/LeetCode-1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination/">LeetCode 1293 Shortest Path in a Grid with Obstacles Elimination</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-19</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/leetcode/">leetcode</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/bfs/">bfs</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/queue/">queue</a></span><div class="content"><p>这道题乍一看挺复杂的，不能直接套用bfs的模板做题。但其实理解了题目之后就非常简单了。。。（说到底就是智商不够）。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">shortestPath</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt;&amp; grid, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">const</span> <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; dirs = &#123;<span class="number">1</span>, <span class="number">0</span>, <span class="number">-1</span>, <span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> n = grid.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">int</span> m = grid[<span class="number">0</span>].<span class="built_in">size</span>();</span><br><span class="line">        <span class="built_in">vector</span>&lt;<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&gt; visited(n, <span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;(m, INT_MAX));</span><br><span class="line">        <span class="built_in">queue</span>&lt;tuple&lt;<span class="keyword">int</span>, <span class="keyword">int</span>, <span class="keyword">int</span>&gt;&gt; q;  <span class="comment">// (x, y, o)</span></span><br><span class="line">        <span class="keyword">int</span> steps = <span class="number">0</span>;</span><br><span class="line">        q.push(&#123;<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>&#125;);</span><br><span class="line">        visited[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span> (!q.empty()) &#123;</span><br><span class="line">            <span class="keyword">int</span> <span class="built_in">size</span> = q.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">while</span> (<span class="built_in">size</span>--) &#123;</span><br><span class="line">                <span class="keyword">int</span> x, y, o;</span><br><span class="line">                tie(x, y, o) = q.front(); q.pop();</span><br><span class="line">                <span class="keyword">if</span> (x == n - <span class="number">1</span> &amp;&amp; y == m - <span class="number">1</span>)</span><br><span class="line">                    <span class="keyword">return</span> steps;</span><br><span class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i++) &#123;</span><br><span class="line">                    <span class="keyword">int</span> tx = x + dirs[i];</span><br><span class="line">                    <span class="keyword">int</span> ty = y + dirs[i + <span class="number">1</span>];</span><br><span class="line">                    <span class="keyword">if</span> (tx &lt; <span class="number">0</span> || ty &lt; <span class="number">0</span> ||</span><br><span class="line">                        tx &gt;= n || ty &gt;= m)</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    <span class="keyword">int</span> to = o + grid[tx][ty];</span><br><span class="line">                    <span class="keyword">if</span> (to &gt;= visited[tx][ty] || to &gt; k)</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    visited[tx][ty] = to;</span><br><span class="line">                    q.push(&#123;tx, ty, to&#125;);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            steps++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
 <p>这里我们使用了传统的bfs方法遍历整个graph，但是我们加入了一个visited二维数组来储存到达每个点穿过的最少obstacles的数量。因为bfs是一层一层进行的，所以后被遍历到的点使用的步数一定比之前的大。假如穿过的obstacles数量还更大，那么便没有利用的价值了。所以接下来遍历的时候，只将obstacle数量小于当前数量的走法进队列。最后在队列出口处加一段判断终点的代码。（完美，要是在比赛的时候能想出来就好了）。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/19/leetcode/LeetCode-1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination/" data-id="ck4hixd82000tusvq82ix01wh" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bfs/" rel="tag">bfs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/queue/" rel="tag">queue</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-tools/how-to-use-windows-10-effectively-as-a-programmer" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/18/tools/how-to-use-windows-10-effectively-as-a-programmer/" class="article-date">
-  <time datetime="2019-12-18T23:47:02.000Z" itemprop="datePublished">2019-12-18</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/18/tools/how-to-use-windows-10-effectively-as-a-programmer/">如何高效使用windows 10</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近重装Windows 10（因为一些不可抗力），对于如何将windows 10打造成cs系自闭学生的代码环境深有体会。于下文讲解一二。</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/18/tools/how-to-use-windows-10-effectively-as-a-programmer/">如何高效使用windows 10</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-18</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/windows/">windows</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/windows-10/">windows 10</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/microsoft/">microsoft</a></span><div class="content"><p>最近重装Windows 10（因为一些不可抗力），对于如何将windows 10打造成cs系自闭学生的代码环境深有体会。于下文讲解一二。</p>
 <p>首先，你需要有一个非常帅气的bash（就像Linux平台一样）。但是众所周知，windows自带的powershell和cmd非常的丑，特别是powershell，虽然字体还算不错，但是那个深蓝的背景是什么鬼？？？果然微软内部有蓝色巨人的内应（什么玩意）。当然，我也曾经尝试过第三方的terminal，比如msys2和cmder。msys2内置pacman，安装应用自然是非常方便，但是硬伤也很明显：不清真。外观丑陋，一股浓浓的win7和xp的结合体风格（现在是9012年了喂）。cmder也不是最终解决方案：这个软件是portable version，和系统并不是深度结合，令完美主义者抓狂，而且有时候下载的软件会报错（没错就是这样）。所以，我们选择windows terminal。这个终端软件在2019年初的microsoft build大会第一次与世人见面（没错微软传统的预览版）。据说2019年底能出正式版（假的吧，我现在还没见着正式版呢，于2019年12月中旬）。当然，就算预览版，还是非常好用的。windows terminal其实就是给每个终端软件再加一个壳，所以其内核还是用户自己选择的bash软件（一般是都是cmd或者powershell）。下载方式：在microsoft store里下载。</p>
 <p>当然，选择了shell之后，我们还是需要选择真正的bash程序。这里我们放弃powershell，因为powershell的弱智的deep♂蓝色背景（没错又是它）。这里，我们选择powershell core。这是一个与powershell类似，但跨平台的powershell终端软件（微软还是干了件大好事）。安装方式：上微软github页面下载msi。</p>
 <p>最后，还要调整下windows terminal的设置<img src="text/windows10/windows_terminal_profile.json" alt="profile.json">。这里大概设置了下配色和快捷键和调用powershell core（直接复制粘贴就行了，别问）。</p>
@@ -284,171 +48,19 @@
 <p>最后需要安装的就是我们的python啦。有意思的是，python在微软商店有售，如果不想整msi安装包可以直接去微软商店下载（一般来说在microsoft store下载的程序更干净，更容易卸载）。</p>
 <p>在这里一个cs学生的windows 10就设置完毕啦。之后想装什么cli软件可以通过choco下载。</p>
 <p>强烈安利surface pro系列（没错我就是微软的舔🐕）。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/18/tools/how-to-use-windows-10-effectively-as-a-programmer/" data-id="ck4hixdat0062usvq3xgqcqn1" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/microsoft/" rel="tag">microsoft</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/" rel="tag">windows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows-10/" rel="tag">windows 10</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-opengl/opengl-material-shader-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/05/opengl/opengl-material-shader-1/" class="article-date">
-  <time datetime="2019-12-06T03:23:16.000Z" itemprop="datePublished">2019-12-05</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/05/opengl/opengl-material-shader-1/">opengl material shader 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>其实就是对光照的封装。。。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/05/opengl/opengl-material-shader-1/" data-id="ck4hixd8g001cusvqfx2i1bx5" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-material-shader/" rel="tag">opengl material shader</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-opengl/opengl-lighting-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/04/opengl/opengl-lighting-1/" class="article-date">
-  <time datetime="2019-12-04T22:04:55.000Z" itemprop="datePublished">2019-12-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/04/opengl/opengl-lighting-1/">opengl lighting 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>开始学光照惹。。。<br>有种不好的感觉</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/05/opengl/opengl-material-shader-1/">opengl material shader 1</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-05</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/opengl/">opengl</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/visual-studio/">visual studio</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/opengl-material-shader/">opengl material shader</a></span><div class="content"><p>其实就是对光照的封装。。。</p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/04/opengl/opengl-lighting-1/">opengl lighting 1</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-04</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/opengl/">opengl</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/visual-studio/">visual studio</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/opengl-lighting/">opengl lighting</a></span><div class="content"><p>开始学光照惹。。。<br>有种不好的感觉</p>
 <p>ambient -&gt; diffuse -&gt; specular -&gt; combined(Phong)</p>
 <h2 id="环境颜色"><a href="#环境颜色" class="headerlink" title="环境颜色"></a>环境颜色</h2><p>将当前点的法向量和光线向量做点乘，就能得到当前点的环境光下的颜色</p>
 <h2 id="漫反射光照"><a href="#漫反射光照" class="headerlink" title="漫反射光照"></a>漫反射光照</h2><p>将一个平面上的一点的法向量乘以这个点到光源的向量再乘上环境光的颜色，就可以得到这个点的漫反射的值。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">vec3 lightDir = normalize(lightPos - FragPos);</span><br><span class="line">vec3 diffuse = <span class="built_in">max</span>(dot(lightDir, Normal), <span class="number">0.0f</span>) * lightColor;</span><br><span class="line">FragColor = vec4((diffuse + ambientColor) / <span class="number">2</span> * objColor, <span class="number">1.0f</span>);</span><br></pre></td></tr></table></figure>
 
 <h2 id="镜面反射"><a href="#镜面反射" class="headerlink" title="镜面反射"></a>镜面反射</h2><p>计算平面上一个点的光反射向量与观察者到此点的向量的点成得到角度的cos值，通过cos值加权计算得到lightColor在此处的权重，最后与ambient和diffuse一起得到此处的光照。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vec3 cameraVec = normalize(cameraPos - FragPos);</span><br><span class="line">vec3 specular = <span class="built_in">pow</span>(<span class="built_in">max</span>(dot(reflectVec, cameraVec), <span class="number">0.0f</span>), <span class="number">32</span>) * lightColor;</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/04/opengl/opengl-lighting-1/" data-id="ck4hixd8f001ausvqcolgbs5n" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-lighting/" rel="tag">opengl lighting</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-opengl/opengl-color" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/12/04/opengl/opengl-color/" class="article-date">
-  <time datetime="2019-12-04T20:28:35.000Z" itemprop="datePublished">2019-12-04</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/12/04/opengl/opengl-color/">opengl color</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>一个颜色为v1的物体在颜色为v2的光源的照射下的颜色是v1 * v2。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">vec3 cameraVec = normalize(cameraPos - FragPos);</span><br><span class="line">vec3 specular = <span class="built_in">pow</span>(<span class="built_in">max</span>(dot(reflectVec, cameraVec), <span class="number">0.0f</span>), <span class="number">32</span>) * lightColor;</span><br></pre></td></tr></table></figure></div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/12/04/opengl/opengl-color/">opengl color</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-12-04</time><span class="article-meta tags"><span class="article-meta__separator">|</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/opengl/">opengl</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/visual-studio/">visual studio</a><span class="article-meta__link">-</span><i class="fa fa-tag article-meta__icon" aria-hidden="true"></i><a class="article-meta__tags" href="/tags/opengl-color/">opengl color</a></span><div class="content"><p>一个颜色为v1的物体在颜色为v2的光源的照射下的颜色是v1 * v2。</p>
 <p>所以假如环境是环绕光（就是不是单点光源的那种），只要给渲染出来的图像乘个光源的颜色就行了。</p>
 <p>代码不放了，就几行2333</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">glUniform3f(glGetUniformLocation(shader-&gt;ID, <span class="string">"objColor"</span>), <span class="number">1.0f</span>, <span class="number">0.5f</span>, <span class="number">0.31f</span>);</span><br><span class="line">glUniform3f(glGetUniformLocation(shader-&gt;ID, <span class="string">"ambientColor"</span>), <span class="number">1.0f</span>, <span class="number">0.5f</span>, <span class="number">0.31f</span>);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/12/04/opengl/opengl-color/" data-id="ck4hixd8a0011usvqdeiq6dmw" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-color/" rel="tag">opengl color</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-opengl/opengl-camera-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/30/opengl/opengl-camera-1/" class="article-date">
-  <time datetime="2019-11-30T22:46:10.000Z" itemprop="datePublished">2019-11-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/30/opengl/opengl-camera-1/">opengl camera 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>giligili 爱<del>，不作死就不会die</del></p>
+</div><hr></div><div class="recent-post-item article-container"><a class="article-title" href="/2019/11/30/opengl/opengl-camera-1/">opengl camera 1</a><time class="post-meta__date"><i class="fa fa-calendar" aria-hidden="true"></i> 2019-11-30</time><div class="content"><p>giligili 爱<del>，不作死就不会die</del></p>
 <p>扯远了。。。</p>
 <p>直接贴代码：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Camera.h</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/glm.hpp&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;glm/gtc/matrix_transform.hpp&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Camera</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    Camera(glm::vec3 <span class="built_in">position</span>, glm::vec3 target, glm::vec3 world_up);</span><br><span class="line">    Camera(glm::vec3 <span class="built_in">position</span>, <span class="keyword">float</span> pitch, <span class="keyword">float</span> yaw, glm::vec3 world_up);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// camera的位置</span></span><br><span class="line">    glm::vec3 Position;</span><br><span class="line">    <span class="comment">// camera置于原点时target的位置，也就是camera的方向</span></span><br><span class="line">    glm::vec3 Forward;</span><br><span class="line">    <span class="comment">// camera的右向量</span></span><br><span class="line">    glm::vec3 Right;</span><br><span class="line">    <span class="comment">// camera的上向量</span></span><br><span class="line">    glm::vec3 Up;</span><br><span class="line">    <span class="comment">// 整个世界的上向量</span></span><br><span class="line">    glm::vec3 WorldUp;</span><br><span class="line"></span><br><span class="line">    glm::<span class="function">mat4 <span class="title">GetViewMatrix</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
@@ -456,170 +68,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Camera.cpp</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"Camera.h"</span></span></span><br><span class="line"></span><br><span class="line">Camera::Camera(glm::vec3 <span class="built_in">position</span>, glm::vec3 target, glm::vec3 world_up) &#123;</span><br><span class="line">    Position = <span class="built_in">position</span>;</span><br><span class="line">    WorldUp = world_up;</span><br><span class="line">    Forward = glm::normalize(target - <span class="built_in">position</span>);</span><br><span class="line">    Right = glm::normalize(glm::cross(Forward, WorldUp));</span><br><span class="line">    Up = glm::normalize(glm::cross(Forward, Right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">Camera::Camera(glm::vec3 <span class="built_in">position</span>, <span class="keyword">float</span> pitch, <span class="keyword">float</span> yaw, glm::vec3 world_up) &#123;</span><br><span class="line">    Position = <span class="built_in">position</span>;</span><br><span class="line">    WorldUp = world_up;</span><br><span class="line">    Forward.x = glm::<span class="built_in">cos</span>(pitch) * glm::<span class="built_in">sin</span>(yaw);</span><br><span class="line">    Forward.y = glm::<span class="built_in">sin</span>(pitch);</span><br><span class="line">    Forward.z = glm::<span class="built_in">cos</span>(pitch) * <span class="built_in">cos</span>(yaw);</span><br><span class="line">    Up = glm::normalize(glm::cross(Forward, Right));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">glm::mat4 Camera::GetViewMatrix() &#123;</span><br><span class="line">    <span class="comment">// 当前Camera位置、物体位置、世界的up向量</span></span><br><span class="line">    <span class="keyword">return</span> glm::lookAt(Position, Position + Forward, WorldUp);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>最重要的是pitch、yaw和target向量之间的转换。明白这些，camera章节基本是理解了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/11/30/opengl/opengl-camera-1/" data-id="ck4hixd890010usvqgmsxbw6e" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-opengl/opengl-coordinate-3" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2019/11/30/opengl/opengl-coordinate-3/" class="article-date">
-  <time datetime="2019-11-30T19:56:23.000Z" itemprop="datePublished">2019-11-30</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2019/11/30/opengl/opengl-coordinate-3/">opengl coordinate 3</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="img/opengl/multiple_cube.png" alt="coordinate system"></p>
-<p>重点：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">unsigned</span> <span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    glm::mat4 modelMat2;</span><br><span class="line">    modelMat2 = glm::translate(modelMat2, cubePositions[i]);</span><br><span class="line">    testShader-&gt;use();</span><br><span class="line">    <span class="comment">// 将材质uniform变量设置为int值，从0至15</span></span><br><span class="line">    <span class="comment">// 鬼晓得是咋回事，这不是贴图变量吗？？？</span></span><br><span class="line">    glUniform1i(glGetUniformLocation(testShader-&gt;ID, <span class="string">"ourTexture"</span>), <span class="number">0</span>);</span><br><span class="line">    glUniform1i(glGetUniformLocation(testShader-&gt;ID, <span class="string">"ourTexture"</span>), <span class="number">3</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, "transform"),</span></span><br><span class="line"><span class="comment">                        1, GL_FALSE, glm::value_ptr(trans));*/</span></span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"modelMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(modelMat2));</span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"viewMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(viewMat));</span><br><span class="line">    glUniformMatrix4fv(glGetUniformLocation(testShader-&gt;ID, <span class="string">"projMat"</span>),</span><br><span class="line">        <span class="number">1</span>, GL_FALSE, glm::value_ptr(projMat));</span><br><span class="line">    glDrawArrays(GL_TRIANGLES, <span class="number">0</span>, <span class="number">36</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>用一个循环读取每个顶点的数据，绘制一个正方体</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://neoclear.github.io/2019/11/30/opengl/opengl-coordinate-3/" data-id="ck4hixd8e0019usvq3ycx5tyv" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/opengl-coordinate-system/" rel="tag">opengl coordinate system</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-  </nav>
-
-</section>
-        
-          <aside id="sidebar">
-  
-    
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
-    <div class="widget">
-      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Google-Test/" rel="tag">Google Test</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/adjacency-table/" rel="tag">adjacency table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/backtracing/" rel="tag">backtracing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bfs/" rel="tag">bfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/binary-indexed-tree/" rel="tag">binary indexed tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bipartite-graph/" rel="tag">bipartite graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bit-operation/" rel="tag">bit operation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/brute-force/" rel="tag">brute force</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/build/" rel="tag">build</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/bzoj/" rel="tag">bzoj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/c/" rel="tag">c++</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chinese-remainder-theorem/" rel="tag">chinese remainder theorem</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/cmake/" rel="tag">cmake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/convex-hull/" rel="tag">convex hull</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data structure</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/dfs/" rel="tag">dfs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/driver/" rel="tag">driver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/edmonds-karp/" rel="tag">edmonds karp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fenwick-tree/" rel="tag">fenwick tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ford-fulkerson/" rel="tag">ford fulkerson</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/geometry/" rel="tag">geometry</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graham/" rel="tag">graham</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/graph/" rel="tag">graph</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/greedy/" rel="tag">greedy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gtest/" rel="tag">gtest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hash-table/" rel="tag">hash table</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/heap/" rel="tag">heap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/high-precision/" rel="tag">high precision</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/io-optimization/" rel="tag">io optimization</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/" rel="tag">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/map/" rel="tag">map</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/math/" rel="tag">math</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-flow/" rel="tag">max flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/max-matching/" rel="tag">max matching</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/microsoft/" rel="tag">microsoft</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/network-flow/" rel="tag">network flow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl/" rel="tag">opengl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-color/" rel="tag">opengl color</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-coordinate-system/" rel="tag">opengl coordinate system</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-lighting/" rel="tag">opengl lighting</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-material-shader/" rel="tag">opengl material shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-shader/" rel="tag">opengl shader</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-texture/" rel="tag">opengl texture</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/opengl-transformation/" rel="tag">opengl transformation</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/poj/" rel="tag">poj</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/queue/" rel="tag">queue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segment-tree/" rel="tag">segment tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/set/" rel="tag">set</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sliding-window/" rel="tag">sliding window</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/spfa/" rel="tag">spfa</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stack/" rel="tag">stack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/stl/" rel="tag">stl</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/subarray/" rel="tag">subarray</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/template/" rel="tag">template</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tree/" rel="tag">tree</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/visual-studio/" rel="tag">visual studio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/weekly-contest/" rel="tag">weekly contest</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows-10/" rel="tag">windows 10</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
-    <div class="widget tagcloud">
-      <a href="/tags/Google-Test/" style="font-size: 10px;">Google Test</a> <a href="/tags/adjacency-table/" style="font-size: 10px;">adjacency table</a> <a href="/tags/backtracing/" style="font-size: 10px;">backtracing</a> <a href="/tags/bfs/" style="font-size: 10px;">bfs</a> <a href="/tags/binary-indexed-tree/" style="font-size: 10px;">binary indexed tree</a> <a href="/tags/bipartite-graph/" style="font-size: 10px;">bipartite graph</a> <a href="/tags/bit-operation/" style="font-size: 12px;">bit operation</a> <a href="/tags/brute-force/" style="font-size: 12px;">brute force</a> <a href="/tags/build/" style="font-size: 12px;">build</a> <a href="/tags/bzoj/" style="font-size: 10px;">bzoj</a> <a href="/tags/c/" style="font-size: 10px;">c++</a> <a href="/tags/chinese-remainder-theorem/" style="font-size: 10px;">chinese remainder theorem</a> <a href="/tags/cmake/" style="font-size: 14px;">cmake</a> <a href="/tags/convex-hull/" style="font-size: 10px;">convex hull</a> <a href="/tags/data-structure/" style="font-size: 16px;">data structure</a> <a href="/tags/dfs/" style="font-size: 10px;">dfs</a> <a href="/tags/driver/" style="font-size: 10px;">driver</a> <a href="/tags/edmonds-karp/" style="font-size: 10px;">edmonds karp</a> <a href="/tags/fenwick-tree/" style="font-size: 10px;">fenwick tree</a> <a href="/tags/ford-fulkerson/" style="font-size: 10px;">ford fulkerson</a> <a href="/tags/geometry/" style="font-size: 10px;">geometry</a> <a href="/tags/graham/" style="font-size: 10px;">graham</a> <a href="/tags/graph/" style="font-size: 12px;">graph</a> <a href="/tags/greedy/" style="font-size: 10px;">greedy</a> <a href="/tags/gtest/" style="font-size: 10px;">gtest</a> <a href="/tags/hash-table/" style="font-size: 10px;">hash table</a> <a href="/tags/heap/" style="font-size: 10px;">heap</a> <a href="/tags/high-precision/" style="font-size: 10px;">high precision</a> <a href="/tags/io-optimization/" style="font-size: 10px;">io optimization</a> <a href="/tags/leetcode/" style="font-size: 18px;">leetcode</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/map/" style="font-size: 10px;">map</a> <a href="/tags/math/" style="font-size: 14px;">math</a> <a href="/tags/max-flow/" style="font-size: 10px;">max flow</a> <a href="/tags/max-matching/" style="font-size: 10px;">max matching</a> <a href="/tags/microsoft/" style="font-size: 10px;">microsoft</a> <a href="/tags/network-flow/" style="font-size: 10px;">network flow</a> <a href="/tags/opengl/" style="font-size: 20px;">opengl</a> <a href="/tags/opengl-color/" style="font-size: 10px;">opengl color</a> <a href="/tags/opengl-coordinate-system/" style="font-size: 14px;">opengl coordinate system</a> <a href="/tags/opengl-lighting/" style="font-size: 10px;">opengl lighting</a> <a href="/tags/opengl-material-shader/" style="font-size: 10px;">opengl material shader</a> <a href="/tags/opengl-shader/" style="font-size: 14px;">opengl shader</a> <a href="/tags/opengl-texture/" style="font-size: 14px;">opengl texture</a> <a href="/tags/opengl-transformation/" style="font-size: 10px;">opengl transformation</a> <a href="/tags/poj/" style="font-size: 10px;">poj</a> <a href="/tags/python/" style="font-size: 10px;">python</a> <a href="/tags/queue/" style="font-size: 10px;">queue</a> <a href="/tags/segment-tree/" style="font-size: 10px;">segment tree</a> <a href="/tags/set/" style="font-size: 10px;">set</a> <a href="/tags/sliding-window/" style="font-size: 10px;">sliding window</a> <a href="/tags/spfa/" style="font-size: 10px;">spfa</a> <a href="/tags/stack/" style="font-size: 10px;">stack</a> <a href="/tags/stl/" style="font-size: 10px;">stl</a> <a href="/tags/subarray/" style="font-size: 10px;">subarray</a> <a href="/tags/template/" style="font-size: 10px;">template</a> <a href="/tags/tree/" style="font-size: 10px;">tree</a> <a href="/tags/visual-studio/" style="font-size: 20px;">visual studio</a> <a href="/tags/weekly-contest/" style="font-size: 10px;">weekly contest</a> <a href="/tags/windows/" style="font-size: 10px;">windows</a> <a href="/tags/windows-10/" style="font-size: 10px;">windows 10</a>
-    </div>
-  </div>
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
-    <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/11/">November 2019</a></li></ul>
-    </div>
-  </div>
-
-
-  
-    
-  <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
-    <div class="widget">
-      <ul>
-        
-          <li>
-            <a href="/2019/12/22/leetcode/leetcode-weekly-contest-168/">leetcode weekly contest 168</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/22/technique/python-silver-bullet/">python silver bullet</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/19/technique/cplusplus-silver-bullet/">c++ silver bullet</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/19/leetcode/LeetCode-1293-Shortest-Path-in-a-Grid-with-Obstacles-Elimination/">LeetCode 1293 Shortest Path in a Grid with Obstacles Elimination</a>
-          </li>
-        
-          <li>
-            <a href="/2019/12/18/tools/how-to-use-windows-10-effectively-as-a-programmer/">如何高效使用windows 10</a>
-          </li>
-        
-      </ul>
-    </div>
-  </div>
-
-  
-</aside>
-        
-      </div>
-      <footer id="footer">
-  
-  <div class="outer">
-    <div id="footer-info" class="inner">
-      &copy; 2019 John Doe<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
-    </div>
-  </div>
-</footer>
-    </div>
-    <nav id="mobile-nav">
-  
-    <a href="/" class="mobile-nav-link">Home</a>
-  
-    <a href="/archives" class="mobile-nav-link">Archives</a>
-  
-</nav>
-    
-
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-
-
-  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
-  <script src="/fancybox/jquery.fancybox.pack.js"></script>
-
-
-<script src="/js/script.js"></script>
-
-
-
-  </div>
-</body>
-</html>
+</div><hr></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">&lt;i class=&quot;fa fa-chevron-right&quot;&gt;&lt;&#x2F;i&gt;</a></div></nav></div></div><footer><div class="layout" id="footer"><div class="copyright">&copy;2013 - 2019 By NeoClear</div><div class="framework-info"><span>Driven - </span><a href="http://hexo.io" target="_blank" rel="noopener"><span>Hexo</span></a><span class="footer-separator">|</span><span>Theme - </span><a href="https://github.com/Molunerfinn/hexo-theme-melody" target="_blank" rel="noopener"><span>Melody</span></a></div><div class="busuanzi"><script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><span id="busuanzi_container_site_uv"><i class="fa fa-user"></i><span id="busuanzi_value_site_uv"></span><span></span></span><span class="footer-separator">|</span><span id="busuanzi_container_site_pv"><i class="fa fa-eye"></i><span id="busuanzi_value_site_pv"></span><span></span></span></div></div></footer><i class="fa fa-arrow-up" id="go-up" aria-hidden="true"></i><script src="https://cdn.jsdelivr.net/npm/animejs@latest/anime.min.js"></script><script src="https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-animate@latest/velocity.min.js"></script><script src="https://cdn.jsdelivr.net/npm/velocity-ui-pack@latest/velocity.ui.min.js"></script><script src="/js/utils.js?version=1.6.1"></script><script src="/js/fancybox.js?version=1.6.1"></script><script src="/js/sidebar.js?version=1.6.1"></script><script src="/js/copy.js?version=1.6.1"></script><script src="/js/fireworks.js?version=1.6.1"></script><script src="/js/transition.js?version=1.6.1"></script><script src="/js/scroll.js?version=1.6.1"></script><script src="/js/head.js?version=1.6.1"></script><script>if(/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  $('#nav').addClass('is-mobile')
+  $('footer').addClass('is-mobile')
+}</script></body></html>
